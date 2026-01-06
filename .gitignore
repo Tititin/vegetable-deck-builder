@@ -39,3 +39,23 @@
 
 # debug information files
 *.dwo
+
+# Visual Studio cache files
+.vs/*
+
+# -------------------
+# Build
+# -------------------
+/build/
+/Debug/
+/Release/
+/CMakeFiles/
+/CMakeCache.txt
+/*.cmake
+/*.vcxproj*
+/Makefile
+/*.sln
+/*.user
+/*.opensdf
+/*.sdf
+/*.ipch
