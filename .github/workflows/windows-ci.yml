@@ -69,12 +69,12 @@ jobs:
         shell: pwsh
 
 
-      # -------------------
-      # Package build folder into a zip
-      # -------------------
-      - name: Package artefact
-        run: |
-          powershell Compress-Archive -Path build/${{ matrix.config }}/* -DestinationPath build/${{ matrix.config }}/game-${{ matrix.config }}.zip
+    #   # -------------------
+    #   # Package build folder into a zip
+    #   # -------------------
+    #   - name: Package artefact
+    #     run: |
+    #       powershell Compress-Archive -Path build/${{ matrix.config }}/* -DestinationPath build/${{ matrix.config }}/game-${{ matrix.config }}.zip
 
       # -------------------
       # Upload artefact
