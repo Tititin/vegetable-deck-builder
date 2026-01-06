@@ -1,0 +1,62 @@
+name: Windows CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        config: [Debug, Release]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # -------------------
+      # Setup vcpkg
+      # -------------------
+      - name: Cache vcpkg
+        uses: actions/cache@v3
+        with:
+          path: C:/vcpkg/packages
+          key: vcpkg-${{ runner.os }}-sfml-${{ matrix.config }}
+
+      - name: Install vcpkg
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git C:/vcpkg
+          C:/vcpkg/bootstrap-vcpkg.bat
+
+      - name: Install SFML 3
+        run: C:/vcpkg/vcpkg install sfml:x64-windows
+
+      # -------------------
+      # Configure CMake
+      # -------------------
+      - name: Configure CMake
+        run: cmake -S . -B build ^
+              -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake ^
+              -DVCPKG_TARGET_TRIPLET=x64-windows ^
+              -DCMAKE_BUILD_TYPE=${{ matrix.config }}
+
+      # -------------------
+      # Build
+      # -------------------
+      - name: Build
+        run: cmake --build build --config ${{ matrix.config }}
+
+      # -------------------
+      # Upload artefacts
+      # -------------------
+      - name: Upload Build Artefacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: game-${{ matrix.config }}
+          path: build/${{ matrix.config }}/game.exe
