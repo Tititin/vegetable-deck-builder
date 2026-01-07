@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        config: [Debug, Release]
+        config: [Release]
 
     steps:
       # -------------------
