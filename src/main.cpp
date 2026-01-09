@@ -23,9 +23,9 @@ int main()
             if (event->is<sf::Event::Closed>())
                 window.close();
 
-            if (event->is<sf::Event::KeyPressed>() && event->as<sf::Event::KeyPressed>().key.code == sf::Keyboard::Key::A)
+            if (event->is<sf::Event::KeyPressed>() && event.key.code == sf::Keyboard::Key::A)
                 sprite.setTexture(texture);
-            if (event->is<sf::Event::KeyPressed>() && event->as<sf::Event::KeyPressed>().key.code == sf::Keyboard::Key::Z)
+            if (event->is<sf::Event::KeyPressed>() && event.key.code == sf::Keyboard::Key::Z)
                 sprite.setTexture(texture2);
                 // window.close();
         }
