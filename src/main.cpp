@@ -23,10 +23,13 @@ int main()
             if (event->is<sf::Event::Closed>())
                 window.close();
 
-            if (event->is<sf::Event::KeyPressed>() && event.key.code == sf::Keyboard::Key::A)
-                sprite.setTexture(texture);
-            if (event->is<sf::Event::KeyPressed>() && event.key.code == sf::Keyboard::Key::Z)
-                sprite.setTexture(texture2);
+            if (const auto keyEvent = event->get<sf::Event::KeyPressed>())
+            {
+                if (keyEvent->code == sf::Keyboard::Space)
+                    sprite.setTexture(texture2);
+                if (keyEvent->code == sf::Keyboard::A)
+                    sprite.setTexture(texture);
+            }
                 // window.close();
         }
 
