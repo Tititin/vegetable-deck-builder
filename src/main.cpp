@@ -10,6 +10,8 @@ int main()
     sf::Texture texture2("assets/images/cards/card_artichoke.png");
     sf::Sprite sprite(texture);
 
+    sprite.setScale(0.103f, 0.103f);
+
     // if (!texture.loadFromFile("assets/images/cards/card_back.png")
     //     || !texture2.loadFromFile("assets/images/cards/card_artichoke.png"))
     // {
