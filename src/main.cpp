@@ -1,35 +1,29 @@
 #include <SFML/Graphics.hpp>
 #include "Card.hpp"
+#include "TextureManager.hpp"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({1920, 1080}), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    sf::Texture texture("assets/images/cards/card_back.png");
-    sf::Texture texture2("assets/images/cards/card_artichoke.png");
-    sf::Sprite sprite(texture);
+    sf::RenderWindow window(sf::VideoMode({1920, 1200}), "SFML works!", sf::Style::None, sf::State::Fullscreen);
 
-    sprite.setScale({0.309f, 0.309f});
-
+    TextureManager textureManager;
+    Card cardPrototype("Artichoke", textureManager.getTexture("card_back"));
 
     while (window.isOpen())
     {
         while (const std::optional event = window.pollEvent())
         {
-            if (event->is<sf::Event::Closed>())
+            if (event->is<sf::Event::Closed>() or sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
                 window.close();
 
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+                cardPrototype.getSprite().setTexture(textureManager.getTexture("card_artichoke"));
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-                sprite.setTexture(texture);
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z))
-                sprite.setTexture(texture2);
-                // window.close();
+                cardPrototype.getSprite().setTexture(textureManager.getTexture("card_back"));
         }
 
         window.clear();
-        window.draw(shape);
-        window.draw(sprite);
+        window.draw(cardPrototype.getSprite());
         window.display();
     }
 }

@@ -10,7 +10,10 @@ set(ASSETS_DIR ${CMAKE_SOURCE_DIR}/assets)
 # SFML 3 : composants et targets
 find_package(SFML CONFIG REQUIRED COMPONENTS Graphics Window System)
 
-add_executable(game src/main.cpp)
+add_executable(game 
+    src/main.cpp
+    src/Card.cpp
+    src/TextureManager.cpp)
 
 add_custom_command(
     TARGET game POST_BUILD
