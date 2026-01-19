@@ -7,7 +7,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode({1920, 1200}), "SFML works!", sf::Style::None, sf::State::Fullscreen);
 
     TextureManager textureManager;
-    Card cardPrototype("Artichoke", textureManager.getTexture("card_back"));
+    Card cardPrototype("Artichoke", textureManager.getTexture("card_back"), textureManager.getTexture("card_artichoke"));
 
     while (window.isOpen())
     {
@@ -16,10 +16,7 @@ int main()
             if (event->is<sf::Event::Closed>() or sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
                 window.close();
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-                cardPrototype.getSprite().setTexture(textureManager.getTexture("card_artichoke"));
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-                cardPrototype.getSprite().setTexture(textureManager.getTexture("card_back"));
+            cardPrototype.handleEvent(event.value(), window);
         }
 
         window.clear();
