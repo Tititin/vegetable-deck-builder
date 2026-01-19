@@ -1,0 +1,88 @@
+name: Windows CI/CD
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        config: [Release]
+
+    steps:
+      # -------------------
+      # Checkout
+      # -------------------
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get version from tag
+        id: version
+        run: |
+          echo "version=${GITHUB_REF_NAME}" >> $env:GITHUB_OUTPUT
+
+      # -------------------
+      # Cache vcpkg
+      # -------------------
+      - name: Cache vcpkg
+        uses: actions/cache@v3
+        with:
+          path: C:/vcpkg/packages
+          key: vcpkg-${{ runner.os }}-sfml-${{ matrix.config }}
+
+      # -------------------
+      # Install vcpkg if cache missed
+      # -------------------
+      - name: Install vcpkg
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git C:/vcpkg
+          C:/vcpkg/bootstrap-vcpkg.bat
+
+      # -------------------
+      # Install SFML 3
+      # -------------------
+      - name: Install SFML 3
+        run: C:/vcpkg/vcpkg install sfml:x64-windows
+
+      # -------------------
+      # Configure CMake
+      # -------------------
+      - name: Configure CMake
+        run: cmake -S . -B build ^
+              -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake ^
+              -DVCPKG_TARGET_TRIPLET=x64-windows ^
+              -DCMAKE_BUILD_TYPE=${{ matrix.config }}
+              -DPROJECT_VERSION=${{ steps.version.outputs.version }}
+
+      # -------------------
+      # Build
+      # -------------------
+      - name: Build
+        run: cmake --build build --config ${{ matrix.config }}
+
+      # -------------------
+      # Copy SFML DLLs into build folder
+      # -------------------
+      - name: Copy SFML DLLs
+        run: Copy-Item "C:/vcpkg/installed/x64-windows/bin/*.dll" -Destination "build/${{ matrix.config }}/" -Recurse
+        shell: pwsh
+
+      - name: Create ZIP
+        run: |
+          Compress-Archive -Path build/Release/* `
+            -DestinationPath vegetable-deck-builder-${{ steps.version.outputs.version }}-windows.zip
+
+      # -------------------
+      # Create Release
+      # -------------------
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: Vegetable Deck Builder ${{ steps.version.outputs.version }}
+          files: vegetable-deck-builder-${{ steps.version.outputs.version }}-windows.zip
