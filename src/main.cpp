@@ -8,6 +8,7 @@ int main()
 
     TextureManager textureManager;
     Card cardPrototype("Artichoke", textureManager.getTexture("card_back"), textureManager.getTexture("card_artichoke"));
+    Card cardOnion("Onion", textureManager.getTexture("card_back"), textureManager.getTexture("card_onion"));
 
     while (window.isOpen())
     {
@@ -17,10 +18,12 @@ int main()
                 window.close();
 
             cardPrototype.handleEvent(event.value(), window);
+            cardOnion.handleEvent(event.value(), window);
         }
 
         window.clear();
-        window.draw(cardPrototype.getSprite());
+        // window.draw(cardPrototype.getSprite());
+        window.draw(cardOnion.getSprite());
         window.display();
     }
 }
