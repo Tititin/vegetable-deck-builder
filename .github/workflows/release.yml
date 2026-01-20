@@ -23,11 +23,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Get version from tag
-        id: version
-        run: |
-          echo "version=${GITHUB_REF_NAME}" >> $env:GITHUB_OUTPUT
-
       # -------------------
       # Cache vcpkg
       # -------------------
@@ -60,7 +55,7 @@ jobs:
               -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake ^
               -DVCPKG_TARGET_TRIPLET=x64-windows ^
               -DCMAKE_BUILD_TYPE=${{ matrix.config }}
-              -DPROJECT_VERSION=${{ steps.version.outputs.version }}
+              -DPROJECT_VERSION=${{ github.ref_name }}
 
       # -------------------
       # Build
@@ -78,7 +73,7 @@ jobs:
       - name: Create ZIP
         run: |
           Compress-Archive -Path build/Release/* `
-            -DestinationPath vegetable-deck-builder-${{ steps.version.outputs.version }}-windows.zip
+            -DestinationPath vegetable-deck-builder-${{ github.ref_name }}-windows.zip
 
       # -------------------
       # Create Release
@@ -86,6 +81,6 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.version.outputs.version }}
-          name: Vegetable Deck Builder ${{ steps.version.outputs.version }}
-          files: vegetable-deck-builder-${{ steps.version.outputs.version }}-windows.zip
+          tag_name: ${{ github.ref_name }}
+          name: Vegetable Deck Builder ${{ github.ref_name }}
+          files: vegetable-deck-builder-${{ github.ref_name }}-windows.zip
