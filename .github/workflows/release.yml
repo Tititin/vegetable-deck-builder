@@ -84,3 +84,4 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: Vegetable Deck Builder ${{ github.ref_name }}
           files: vegetable-deck-builder-${{ github.ref_name }}-windows.zip
+          generate_release_notes: true
