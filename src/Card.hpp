@@ -5,20 +5,47 @@
 #include <iostream>
 #include <string>
 #include <optional>
+#include <functional>
+#include "Clickable.hpp"
 
-class Card
+class Card : public Clickable
 {
 private:
+    // Enums
+    enum class Face {
+        FRONT,
+        BACK
+    };
+
     // SFML Attributes
-    sf::Sprite  _cardSprite;
+    sf::Sprite      _cardSprite;
+    sf::Texture*    _backTexture;
+    sf::Texture*    _frontTexture;
+
+    // Callbacks
+    ClickCallback   _onClick;
 
     // Game Attributes
-    std::string _name;
+    std::string     _name;
+    Face            _currentFace = Face::BACK;
+
 public:
-    Card(const std::string& name, const sf::Texture& backTexture);
+    Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture);
     ~Card();
 
     sf::Sprite& getSprite() { return _cardSprite; }
+    sf::FloatRect getGlobalBounds() const { return _cardSprite.getGlobalBounds(); }
+
+    // Callbacks
+    void setOnClick(ClickCallback callback);
+
+    // Event Handling
+    void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
+    void flipCard();
+
+    // Display
+    void showFront();
+    void showBack();
 };
 
 #endif // CARD_HPP_
