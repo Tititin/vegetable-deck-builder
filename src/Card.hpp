@@ -10,6 +10,22 @@
 
 class Card : public Clickable
 {
+public:
+    enum class VegetableType {
+        ARTICHOKE,
+        ONION,
+        CORN,
+        POTATO,
+        EGGPLANT,
+        PEAS,
+        CARROT,
+        BROCCOLI,
+        LEEK,
+        RHUBARB,
+        BELLPEPPER,
+        BEETROOT
+    };
+
 private:
     // Enums
     enum class Face {
@@ -28,13 +44,19 @@ private:
     // Game Attributes
     std::string     _name;
     Face            _currentFace = Face::BACK;
+    VegetableType   _type;
 
 public:
-    Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture);
+    Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture, const VegetableType& type);
     ~Card();
 
+    // SFML Getters
     sf::Sprite& getSprite() { return _cardSprite; }
     sf::FloatRect getGlobalBounds() const { return _cardSprite.getGlobalBounds(); }
+    sf::Vector2f getPosition() const { return _cardSprite.getPosition(); }
+
+    // SFML Setters
+    void    setPosition(const sf::Vector2f& position) { _cardSprite.setPosition(position); }
 
     // Callbacks
     void setOnClick(ClickCallback callback);

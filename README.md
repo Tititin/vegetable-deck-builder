@@ -39,3 +39,30 @@ No copyright infringement is intended.
 ---
 
 **Status:** Proof-of-concept playable foundation with a single interactive card that can be flipped on click. Establishes the core rendering pipeline, resource management, and event handling needed to build out the full deck-builder game.
+
+## v0.2.0-alpha: Multi-Card Support & Potager System
+
+### New Features
+- **Multiple Card Types** — Support for 12 vegetable types:
+  - Artichoke, Onion, Corn, Potato, Eggplant, Peas, Carrot, Broccoli, Leek, Rhubarb, Bell Pepper, Beetroot
+- **Vegetable Type System** — Cards now carry a `VegetableType` enum for game logic and identification
+- **Second Interactive Card** — Onion card prototype added alongside artichoke
+- **Potager (Garden) System** — New class to manage the game board:
+  - Slot-based garden layout for card placement
+  - Support for multiple interactive elements
+  - Rendering management for garden slots
+- **Dynamic Positioning** — Cards can be positioned at specific coordinates on screen
+
+### Architecture Updates
+- **Card Class Enhancement** — Now tracks vegetable type in addition to visual state
+- **Potager Class** — Manages collections of clickable elements and slot rendering
+- **Improved Main Loop** — Handles multiple cards and potager rendering
+
+### Assets
+- New card texture: Onion (`card_onion`)
+- Potager slot texture (`potager_slot`)
+- Card image assets in `assets/images/cards/` directory
+
+---
+
+**Status:** Multi-card prototype with basic garden system. Demonstrates handling multiple interactive cards and the foundation for the game board layout where players can plant vegetables.
