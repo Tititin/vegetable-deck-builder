@@ -33,8 +33,12 @@ public:
     Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture);
     ~Card();
 
+    // SFML Getters
     sf::Sprite& getSprite() { return _cardSprite; }
     sf::FloatRect getGlobalBounds() const { return _cardSprite.getGlobalBounds(); }
+
+    // SFML Setters
+    void    setPosition(const sf::Vector2f& position) { _cardSprite.setPosition(position); }
 
     // Callbacks
     void setOnClick(ClickCallback callback);
