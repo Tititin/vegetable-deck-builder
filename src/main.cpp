@@ -7,8 +7,8 @@ int main()
     sf::RenderWindow window(sf::VideoMode({1920, 1200}), "SFML works!", sf::Style::None, sf::State::Fullscreen);
 
     TextureManager textureManager;
-    Card cardPrototype("Artichoke", textureManager.getTexture("card_back"), textureManager.getTexture("card_artichoke"));
-    Card cardOnion("Onion", textureManager.getTexture("card_back"), textureManager.getTexture("card_onion"));
+    Card cardPrototype("Artichoke", textureManager.getTexture("card_back"), textureManager.getTexture("card_artichoke"), Card::VegetableType::ARTICHOKE);
+    Card cardOnion("Onion", textureManager.getTexture("card_back"), textureManager.getTexture("card_onion"), Card::VegetableType::ONION);
 
     while (window.isOpen())
     {

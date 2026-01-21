@@ -10,13 +10,7 @@
 
 class Card : public Clickable
 {
-private:
-    // Enums
-    enum class Face {
-        FRONT,
-        BACK
-    };
-
+public:
     enum class VegetableType {
         ARTICHOKE,
         ONION,
@@ -32,6 +26,13 @@ private:
         BEETROOT
     };
 
+private:
+    // Enums
+    enum class Face {
+        FRONT,
+        BACK
+    };
+
     // SFML Attributes
     sf::Sprite      _cardSprite;
     sf::Texture*    _backTexture;
@@ -43,9 +44,10 @@ private:
     // Game Attributes
     std::string     _name;
     Face            _currentFace = Face::BACK;
+    VegetableType   _type;
 
 public:
-    Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture);
+    Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture, const VegetableType& type);
     ~Card();
 
     sf::Sprite& getSprite() { return _cardSprite; }
