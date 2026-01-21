@@ -7,11 +7,19 @@
 class Potager {
 private:
     std::vector<Clickable*> _elements;
+    std::vector<sf::Sprite> _slots;
+
+    sf::Texture*            _slotTexture;
 public:
-    Potager();
+    Potager(const sf::Texture& slotTexture);
     ~Potager();
 
-    void addElement(Clickable* element);
+    void    loadSlots();
+
+    void    addElement(Clickable* element);
     
     std::vector<Clickable*>& getElements() { return _elements; }
+
+    // SFML Methods
+    void    draw(sf::RenderTarget& target) const;
 };

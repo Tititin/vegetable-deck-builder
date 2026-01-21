@@ -5,7 +5,7 @@ TextureManager::TextureManager() { // Temporary constructor loading some texture
     _textures["card_artichoke"] = sf::Texture("assets/images/cards/card_artichoke.png");
     _textures["card_onion"] = sf::Texture("assets/images/cards/card_onion.png");
     
-    _textures["potager_slot"] = sf::Texture("assets/images/potager/slot.png");
+    _textures["potager_slot"] = sf::Texture("assets/images/potager/potager_slot.png");
 }
 
 TextureManager::~TextureManager() {}
