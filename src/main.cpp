@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Card.hpp"
+#include "Potager.hpp"
 #include "TextureManager.hpp"
 
 int main()
@@ -10,9 +11,11 @@ int main()
     Card cardPrototype("Artichoke", textureManager.getTexture("card_back"), textureManager.getTexture("card_artichoke"), Card::VegetableType::ARTICHOKE);
     Card cardOnion("Onion", textureManager.getTexture("card_back"), textureManager.getTexture("card_onion"), Card::VegetableType::ONION);
 
-    cardOnion.setPosition({600.f, 300.f});
+    Potager potager(textureManager.getTexture("potager_slot"));
 
-    cardOnion.setPosition({600.f, 300.f});
+    cardPrototype.setPosition({350.f, 400.f});
+    cardOnion.setPosition({600.f, 400.f});
+    potager.loadSlots();
 
     while (window.isOpen())
     {
@@ -26,6 +29,7 @@ int main()
         }
 
         window.clear();
+        potager.draw(window);
         window.draw(cardPrototype.getSprite());
         window.draw(cardOnion.getSprite());
         window.display();
