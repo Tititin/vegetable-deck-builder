@@ -1,7 +1,11 @@
 #include "Card.hpp"
 
-Card::Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture)
-    : _name(name), _cardSprite(backTexture), _backTexture(const_cast<sf::Texture*>(&backTexture)), _frontTexture(const_cast<sf::Texture*>(&frontTexture))
+Card::Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture, const VegetableType& type)
+    :   _name(name),
+        _cardSprite(backTexture),
+        _backTexture(const_cast<sf::Texture*>(&backTexture)),
+        _frontTexture(const_cast<sf::Texture*>(&frontTexture)),
+        _type(type)
 {
     _cardSprite.setScale({0.309f, 0.309f}); // Scale to fit the window
     setOnClick([this](Clickable&){
