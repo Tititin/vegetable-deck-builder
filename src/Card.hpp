@@ -17,6 +17,21 @@ private:
         BACK
     };
 
+    enum class VegetableType {
+        ARTICHOKE,
+        ONION,
+        CORN,
+        POTATO,
+        EGGPLANT,
+        PEAS,
+        CARROT,
+        BROCCOLI,
+        LEEK,
+        RHUBARB,
+        BELLPEPPER,
+        BEETROOT
+    };
+
     // SFML Attributes
     sf::Sprite      _cardSprite;
     sf::Texture*    _backTexture;
