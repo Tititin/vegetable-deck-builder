@@ -36,6 +36,7 @@ public:
     // SFML Getters
     sf::Sprite& getSprite() { return _cardSprite; }
     sf::FloatRect getGlobalBounds() const { return _cardSprite.getGlobalBounds(); }
+    sf::Vector2f getPosition() const { return _cardSprite.getPosition(); }
 
     // SFML Setters
     void    setPosition(const sf::Vector2f& position) { _cardSprite.setPosition(position); }
