@@ -10,6 +10,8 @@ int main()
     Card cardPrototype("Artichoke", textureManager.getTexture("card_back"), textureManager.getTexture("card_artichoke"), Card::VegetableType::ARTICHOKE);
     Card cardOnion("Onion", textureManager.getTexture("card_back"), textureManager.getTexture("card_onion"), Card::VegetableType::ONION);
 
+    cardOnion.setPosition({600.f, 300.f});
+
     while (window.isOpen())
     {
         while (const std::optional event = window.pollEvent())
@@ -22,7 +24,7 @@ int main()
         }
 
         window.clear();
-        // window.draw(cardPrototype.getSprite());
+        window.draw(cardPrototype.getSprite());
         window.draw(cardOnion.getSprite());
         window.display();
     }
