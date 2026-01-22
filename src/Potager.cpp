@@ -3,7 +3,7 @@
 Potager::Potager(const sf::Texture& slotTexture) 
     :   _slotTexture(const_cast<sf::Texture*>(&slotTexture))
 {
-    _elements = std::vector<Clickable*>();
+    _elements = std::vector<Clickable*>(5);
 }
 
 Potager::~Potager() {
