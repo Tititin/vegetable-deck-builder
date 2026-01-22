@@ -20,9 +20,9 @@ public:
         EGGPLANT,
         PEAS,
         CARROT,
-        BROCCOLI,
+        // BROCCOLI,
         LEEK,
-        RHUBARB,
+        // RHUBARB,
         BELLPEPPER,
         BEETROOT
     };
@@ -53,7 +53,7 @@ public:
 
     [[deprecated("Use Card(const Card::VegetableType& type, TextureManager& textureManager) instead.")]]
     Card(const std::string& name, TextureManager& textureManager);
-    
+
     Card(const Card::VegetableType& type, TextureManager& textureManager);
     ~Card();
 

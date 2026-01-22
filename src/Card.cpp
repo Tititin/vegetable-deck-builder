@@ -53,15 +53,15 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
         case VegetableType::CARROT:
             _name = "carrot";
             break;
-        case VegetableType::BROCCOLI:
-            _name = "broccoli";
-            break;
+        // case VegetableType::BROCCOLI:
+        //     _name = "broccoli";
+        //     break;
         case VegetableType::LEEK:
             _name = "leek";
             break;
-        case VegetableType::RHUBARB:
-            _name = "rhubarb";
-            break;
+        // case VegetableType::RHUBARB:
+        //     _name = "rhubarb";
+        //     break;
         case VegetableType::BELLPEPPER:
             _name = "bellpepper";
             break;
