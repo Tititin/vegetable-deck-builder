@@ -7,6 +7,7 @@
 #include <optional>
 #include <functional>
 #include "Clickable.hpp"
+#include "TextureManager.hpp"
 
 class Card : public Clickable
 {
@@ -47,7 +48,13 @@ private:
     VegetableType   _type;
 
 public:
+    [[deprecated("Use Card(const Card::VegetableType& type, TextureManager& textureManager) instead.")]]
     Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture, const VegetableType& type);
+
+    [[deprecated("Use Card(const Card::VegetableType& type, TextureManager& textureManager) instead.")]]
+    Card(const std::string& name, TextureManager& textureManager);
+    
+    Card(const Card::VegetableType& type, TextureManager& textureManager);
     ~Card();
 
     // SFML Getters
