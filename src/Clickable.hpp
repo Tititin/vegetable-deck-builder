@@ -13,4 +13,6 @@ public:
 
     virtual ~Clickable() = default;
     virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) = 0;
+
+    virtual sf::Sprite& getSprite() = 0;
 };

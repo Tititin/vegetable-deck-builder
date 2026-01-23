@@ -13,7 +13,7 @@ class Card : public Clickable
 {
 public:
     enum class VegetableType {
-        ARTICHOKE,
+        ARTICHOKE = 0,
         ONION,
         CORN,
         POTATO,

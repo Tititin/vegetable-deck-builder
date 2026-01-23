@@ -1,4 +1,5 @@
 #include "Potager.hpp"
+#include "Card.hpp"
 
 Potager::Potager(const sf::Texture& slotTexture) 
     :   _slotTexture(const_cast<sf::Texture*>(&slotTexture))
@@ -7,6 +8,9 @@ Potager::Potager(const sf::Texture& slotTexture)
 }
 
 Potager::~Potager() {
+    for (auto& element : _elements) {
+        delete element;
+    }
     _elements.clear();
 }
 
@@ -21,13 +25,17 @@ void Potager::loadSlots()
     }
 }
 
-void Potager::addElement(Clickable* element) {
-    _elements.push_back(element);
+void Potager::addCard(Clickable *card, const int &index)
+{
+    _elements[index] = card;
 }
 
 void Potager::draw(sf::RenderTarget &target) const
 {
     for (const auto& slot : _slots) {
         target.draw(slot);
+    }
+    for (const auto& element : _elements) {
+        target.draw(element->getSprite());
     }
 }
