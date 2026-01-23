@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "lib/Random.hpp"
 #include "Card.hpp"
 #include "Potager.hpp"
 #include "TextureManager.hpp"
@@ -8,14 +9,17 @@ int main()
     sf::RenderWindow window(sf::VideoMode({1920, 1200}), "SFML works!", sf::Style::None, sf::State::Fullscreen);
 
     TextureManager textureManager;
-    Card cardPrototype("Artichoke", textureManager.getTexture("card_back"), textureManager.getTexture("card_artichoke"), Card::VegetableType::ARTICHOKE);
-    Card cardOnion("Onion", textureManager.getTexture("card_back"), textureManager.getTexture("card_onion"), Card::VegetableType::ONION);
-
     Potager potager(textureManager.getTexture("potager_slot"));
+    std::uniform_int_distribution<int> distribution(1, 9);
 
-    cardPrototype.setPosition({350.f, 400.f});
-    cardOnion.setPosition({600.f, 400.f});
     potager.loadSlots();
+
+    for (int i = 0; i < 5; i++) {
+        Card::VegetableType type = static_cast<Card::VegetableType>(distribution(Random::engine()));
+        Card* newCard = new Card(type, textureManager);
+        potager.addCard(newCard, i);
+        newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
+    }
 
     while (window.isOpen())
     {
@@ -24,14 +28,13 @@ int main()
             if (event->is<sf::Event::Closed>() or sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
                 window.close();
 
-            cardPrototype.handleEvent(event.value(), window);
-            cardOnion.handleEvent(event.value(), window);
+            for (int i = 0; i < potager.getElements().size(); i++) {
+                potager.getElements()[i]->handleEvent(event.value(), window);
+            }
         }
 
         window.clear();
         potager.draw(window);
-        window.draw(cardPrototype.getSprite());
-        window.draw(cardOnion.getSprite());
         window.display();
     }
 }
