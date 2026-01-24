@@ -1,5 +1,6 @@
 #include "Card.hpp"
 
+[[deprecated("Use Card(const Card::VegetableType& type, TextureManager& textureManager) instead.")]]
 Card::Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture, const VegetableType& type)
     :   _name(name),
         _cardSprite(backTexture),
@@ -13,6 +14,7 @@ Card::Card(const std::string& name, const sf::Texture& backTexture, const sf::Te
     });
 }
 
+[[deprecated("Use Card(const Card::VegetableType& type, TextureManager& textureManager) instead.")]]
 Card::Card(const std::string &name, TextureManager& textureManager)
     :   _name(name),
         _cardSprite(textureManager.getTexture("card_back")),
