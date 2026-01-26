@@ -1,39 +1,5 @@
 #include "Card.hpp"
 
-[[deprecated("Use Card(const Card::VegetableType& type, TextureManager& textureManager) instead.")]]
-Card::Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture, const VegetableType& type)
-    :   _name(name),
-        _cardSprite(backTexture),
-        _backTexture(const_cast<sf::Texture*>(&backTexture)),
-        _frontTexture(const_cast<sf::Texture*>(&frontTexture)),
-        _type(type)
-{
-    _cardSprite.setScale({0.309f, 0.309f}); // Scale to fit the window
-    setOnClick([this](Clickable&){
-        this->setClickState(ClickState::PRESSED);
-    });
-    setOnClickRelease([this](Clickable&){
-        this->setClickState(ClickState::NONE);
-    });
-}
-
-[[deprecated("Use Card(const Card::VegetableType& type, TextureManager& textureManager) instead.")]]
-Card::Card(const std::string &name, TextureManager& textureManager)
-    :   _name(name),
-        _cardSprite(textureManager.getTexture("card_back")),
-        _backTexture(&textureManager.getTexture("card_back"))
-{
-        _frontTexture = &textureManager.getTexture("card_" + name);
-        _type = VegetableType::ARTICHOKE; // Temporary, should map name to type
-        _cardSprite.setScale({0.309f, 0.309f}); // Scale to fit the window
-        setOnClick([this](Clickable&){
-            this->setClickState(ClickState::PRESSED);
-        });
-        setOnClickRelease([this](Clickable&){
-            this->setClickState(ClickState::NONE);
-        });
-}
-
 Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
     :   _cardSprite(textureManager.getTexture("card_back")),
         _backTexture(&textureManager.getTexture("card_back")),
@@ -89,7 +55,6 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
         this->setClickState(ClickState::NONE);
     });
 }
-
 
 Card::~Card()
 {
