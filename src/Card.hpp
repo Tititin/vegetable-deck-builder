@@ -78,7 +78,7 @@ public:
 
     // Event Handling
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
-    // void flipCard();
+    void flipCard();
     void setClickState(ClickState state);
 
     // Display

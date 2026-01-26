@@ -139,10 +139,10 @@ void Card::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
     }
 }
 
-// void Card::flipCard()
-// {
-//     (this->_currentFace == Face::BACK) ? showFront() : showBack();
-// }
+void Card::flipCard()
+{
+    (this->_currentFace == Face::BACK) ? showFront() : showBack();
+}
 
 void Card::setClickState(ClickState state)
 {
