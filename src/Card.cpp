@@ -134,7 +134,7 @@ void Card::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
 
         if (_clickState == ClickState::PRESSED)
         {
-            _cardSprite.setPosition(mousePos);
+            _cardSprite.setPosition(mousePos - sf::Vector2f(_cardSprite.getGlobalBounds().size.x / 2, _cardSprite.getGlobalBounds().size.y / 2));
         }
     }
 }
