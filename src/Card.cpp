@@ -54,6 +54,7 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
     setOnClickRelease([this](Clickable&){
         this->setClickState(ClickState::NONE);
     });
+    flipCard();
 }
 
 Card::~Card()

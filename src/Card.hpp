@@ -50,7 +50,7 @@ private:
 
     // Game Attributes
     std::string     _name;
-    Face            _currentFace = Face::FRONT;
+    Face            _currentFace = Face::BACK;
     ClickState      _clickState = ClickState::NONE;
     VegetableType   _type;
 
