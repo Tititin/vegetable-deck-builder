@@ -1,31 +1,5 @@
 #include "Card.hpp"
 
-Card::Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture, const VegetableType& type)
-    :   _name(name),
-        _cardSprite(backTexture),
-        _backTexture(const_cast<sf::Texture*>(&backTexture)),
-        _frontTexture(const_cast<sf::Texture*>(&frontTexture)),
-        _type(type)
-{
-    _cardSprite.setScale({0.309f, 0.309f}); // Scale to fit the window
-    setOnClick([this](Clickable&){
-        this->flipCard();
-    });
-}
-
-Card::Card(const std::string &name, TextureManager& textureManager)
-    :   _name(name),
-        _cardSprite(textureManager.getTexture("card_back")),
-        _backTexture(&textureManager.getTexture("card_back"))
-{
-        _frontTexture = &textureManager.getTexture("card_" + name);
-        _type = VegetableType::ARTICHOKE; // Temporary, should map name to type
-        _cardSprite.setScale({0.309f, 0.309f}); // Scale to fit the window
-        setOnClick([this](Clickable&){
-            this->flipCard();
-        });
-}
-
 Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
     :   _cardSprite(textureManager.getTexture("card_back")),
         _backTexture(&textureManager.getTexture("card_back")),
@@ -75,10 +49,13 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
     _frontTexture = &textureManager.getTexture("card_" + _name);
     _cardSprite.setScale({0.309f, 0.309f}); // Scale to fit the window
     setOnClick([this](Clickable&){
-        this->flipCard();
+            this->setClickState(ClickState::PRESSED);
     });
+    setOnClickRelease([this](Clickable&){
+        this->setClickState(ClickState::NONE);
+    });
+    flipCard();
 }
-
 
 Card::~Card()
 {
@@ -87,6 +64,11 @@ Card::~Card()
 void Card::setOnClick(ClickCallback callback)
 {
     _onClick = std::move(callback);
+}
+
+void Card::setOnClickRelease(ClickReleaseCallback callback)
+{
+    _onClickRelease = std::move(callback);
 }
 
 void Card::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
@@ -104,11 +86,33 @@ void Card::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
             }
         }
     }
+    if (const auto mouseButtonReleased = event.getIf<sf::Event::MouseButtonReleased>())
+    {
+        if (mouseButtonReleased->button == sf::Mouse::Button::Left)
+        {
+            if (_onClickRelease)
+                _onClickRelease(*this);
+        }
+    }
+    if (const auto mouseMoved = event.getIf<sf::Event::MouseMoved>())
+    {
+        const auto mousePos = window.mapPixelToCoords({mouseMoved->position});
+
+        if (_clickState == ClickState::PRESSED)
+        {
+            _cardSprite.setPosition(mousePos - sf::Vector2f(_cardSprite.getGlobalBounds().size.x / 2, _cardSprite.getGlobalBounds().size.y / 2));
+        }
+    }
 }
 
 void Card::flipCard()
 {
     (this->_currentFace == Face::BACK) ? showFront() : showBack();
+}
+
+void Card::setClickState(ClickState state)
+{
+    _clickState = state;
 }
 
 void Card::showFront()
