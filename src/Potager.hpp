@@ -16,7 +16,7 @@ public:
 
     void    loadSlots();
 
-    void    addElement(Clickable* element);
+    void    addCard(Clickable* card, const int& index);
     
     std::vector<Clickable*>& getElements() { return _elements; }
 

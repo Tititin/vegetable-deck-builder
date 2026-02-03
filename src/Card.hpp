@@ -7,21 +7,22 @@
 #include <optional>
 #include <functional>
 #include "Clickable.hpp"
+#include "TextureManager.hpp"
 
 class Card : public Clickable
 {
 public:
     enum class VegetableType {
-        ARTICHOKE,
+        ARTICHOKE = 0,
         ONION,
         CORN,
         POTATO,
         EGGPLANT,
         PEAS,
         CARROT,
-        BROCCOLI,
+        // BROCCOLI,
         LEEK,
-        RHUBARB,
+        // RHUBARB,
         BELLPEPPER,
         BEETROOT
     };
@@ -33,6 +34,11 @@ private:
         BACK
     };
 
+    enum class ClickState {
+        NONE,
+        PRESSED
+    };
+
     // SFML Attributes
     sf::Sprite      _cardSprite;
     sf::Texture*    _backTexture;
@@ -40,14 +46,16 @@ private:
 
     // Callbacks
     ClickCallback   _onClick;
+    ClickCallback   _onClickRelease;
 
     // Game Attributes
     std::string     _name;
     Face            _currentFace = Face::BACK;
+    ClickState      _clickState = ClickState::NONE;
     VegetableType   _type;
 
 public:
-    Card(const std::string& name, const sf::Texture& backTexture, const sf::Texture& frontTexture, const VegetableType& type);
+    Card(const Card::VegetableType& type, TextureManager& textureManager);
     ~Card();
 
     // SFML Getters
@@ -60,10 +68,12 @@ public:
 
     // Callbacks
     void setOnClick(ClickCallback callback);
+    void setOnClickRelease(ClickReleaseCallback callback);
 
     // Event Handling
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
     void flipCard();
+    void setClickState(ClickState state);
 
     // Display
     void showFront();

@@ -10,7 +10,10 @@ private:
 public:
     //Callbacks
     using ClickCallback = std::function<void(Clickable&)>;
+    using ClickReleaseCallback = std::function<void(Clickable&)>;
 
     virtual ~Clickable() = default;
     virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) = 0;
+
+    virtual sf::Sprite& getSprite() = 0;
 };
