@@ -14,6 +14,8 @@ class Deck {
         // SFML Attributes
         sf::Sprite      _deckSprite;
         sf::Texture*    _deckTexture;
+        sf::Font        _deckFont;
+        sf::Text        _deckCountText; // For v0.4.0 only: display number of cards left by type
 
     public:
         Deck(TextureManager& textureManager);
@@ -29,4 +31,5 @@ class Deck {
 
         // Display
         void draw(sf::RenderTarget& target) const { target.draw(_deckSprite); }
+        void drawContent(sf::RenderTarget& target);
 };
