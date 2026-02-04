@@ -2,6 +2,7 @@
 #include "lib/Random.hpp"
 #include "Card.hpp"
 #include "Potager.hpp"
+#include "Deck.hpp"
 #include "TextureManager.hpp"
 
 int main()
