@@ -94,15 +94,6 @@ void Card::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
                 _onClickRelease(*this);
         }
     }
-    if (const auto mouseMoved = event.getIf<sf::Event::MouseMoved>())
-    {
-        const auto mousePos = window.mapPixelToCoords({mouseMoved->position});
-
-        if (_clickState == ClickState::PRESSED)
-        {
-            _cardSprite.setPosition(mousePos - sf::Vector2f(_cardSprite.getGlobalBounds().size.x / 2, _cardSprite.getGlobalBounds().size.y / 2));
-        }
-    }
 }
 
 void Card::flipCard()
