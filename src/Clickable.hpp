@@ -32,4 +32,6 @@ public:
 
     virtual ClickState getClickState() const { return _clickState; }
     virtual void setClickState(ClickState state) { _clickState = state; }
+
+    virtual bool contains(const sf::Vector2f& point) const { return _sprite.getGlobalBounds().contains(point); }
 };
