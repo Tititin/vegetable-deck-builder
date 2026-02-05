@@ -19,6 +19,7 @@ void InputManager::handleEvent(const sf::Event &event, const sf::RenderWindow &w
                 {
                     if (clickable->getOnClick())
                         clickable->getOnClick()(*clickable);
+                    break; // Assuming only one clickable should respond to a click
                 }
             }
         }
