@@ -20,9 +20,9 @@ public:
         EGGPLANT,
         PEAS,
         CARROT,
-        // BROCCOLI,
+        BROCCOLI,
         LEEK,
-        // RHUBARB,
+        RHUBARB,
         BELLPEPPER,
         BEETROOT
     };

@@ -14,7 +14,7 @@ int main()
     TextureManager  textureManager;
     Potager         potager(textureManager.getTexture("potager_slot"));
     Deck            deck(inputManager, textureManager);
-    std::uniform_int_distribution<int> distribution(1, 9);
+    std::uniform_int_distribution<int> distribution(1, 11);
 
     potager.loadSlots();
 
