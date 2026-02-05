@@ -50,6 +50,7 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
     _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
     setOnClick([this](Clickable&){
             this->setClickState(ClickState::PRESSED);
+            flipCard();
     });
     setOnClickRelease([this](Clickable&){
         this->setClickState(ClickState::NONE);
