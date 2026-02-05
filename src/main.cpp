@@ -2,14 +2,16 @@
 #include "lib/Random.hpp"
 #include "Card.hpp"
 #include "Potager.hpp"
+#include "Deck.hpp"
 #include "TextureManager.hpp"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({1920, 1200}), "SFML works!", sf::Style::None, sf::State::Fullscreen);
 
-    TextureManager textureManager;
-    Potager potager(textureManager.getTexture("potager_slot"));
+    TextureManager  textureManager;
+    Potager         potager(textureManager.getTexture("potager_slot"));
+    Deck            deck(textureManager);
     std::uniform_int_distribution<int> distribution(1, 9);
 
     potager.loadSlots();
@@ -20,6 +22,13 @@ int main()
         potager.addCard(newCard, i);
         newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
     }
+
+    // Prototype for drawing cards from the deck
+    // Card::VegetableType deckCardType = deck.drawCard();
+    // Card deckCard(deckCardType, textureManager);
+    // deckCard.setPosition({850.f, 800.f});
+
+    window.setKeyRepeatEnabled(false); // Disable key repeat to prevent multiple draws from the deck when holding space
 
     while (window.isOpen())
     {
@@ -35,6 +44,9 @@ int main()
 
         window.clear();
         potager.draw(window);
+        deck.draw(window);
+        deck.drawContent(window);
+        // window.draw(deckCard.getSprite());
         window.display();
     }
 }
