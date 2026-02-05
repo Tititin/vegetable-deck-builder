@@ -48,12 +48,18 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
     }
     _frontTexture = &textureManager.getTexture("card_" + _name);
     _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
+
+    _bounds.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y});
+    _bounds.setOutlineColor(sf::Color::Yellow);
+    _bounds.setOutlineThickness(2.f);
     setOnClick([this](Clickable&){
-            this->setClickState(ClickState::PRESSED);
-            flipCard();
+            click();
     });
     setOnClickRelease([this](Clickable&){
-        this->setClickState(ClickState::NONE);
+        // this->setClickState(ClickState::NONE);
+    });
+    setOnDoubleClick([this](Clickable&){
+        flipCard();
     });
     flipCard();
 }
@@ -70,6 +76,11 @@ void Card::setOnClick(ClickCallback callback)
 void Card::setOnClickRelease(ClickReleaseCallback callback)
 {
     _onClickRelease = std::move(callback);
+}
+
+void Card::setOnDoubleClick(ClickCallback callback)
+{
+    _onDoubleClick = std::move(callback);
 }
 
 void Card::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
@@ -105,6 +116,18 @@ void Card::flipCard()
 void Card::setClickState(ClickState state)
 {
     _clickState = state;
+}
+
+void Card::click()
+{
+    if (this->getClickState() == ClickState::NONE)
+    {
+        this->setClickState(ClickState::PRESSED);
+    }
+    else
+    {
+        this->setClickState(ClickState::NONE);
+    }
 }
 
 void Card::showFront()

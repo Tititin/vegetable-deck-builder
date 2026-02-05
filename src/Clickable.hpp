@@ -29,13 +29,18 @@ public:
 
     virtual ClickCallback getOnClick() const { return _onClick; }
     virtual ClickCallback getOnClickRelease() const { return _onClickRelease; }
+    virtual ClickCallback getOnDoubleClick() const { return _onDoubleClick; }
     virtual bool contains(const sf::Vector2f& point) const { return _sprite.getGlobalBounds().contains(point); }
+
+    virtual void click() = 0;
 
 protected:
     ClickCallback _onClick;
     ClickCallback _onClickRelease;
+    ClickCallback _onDoubleClick;
 
     sf::Sprite      _sprite;
+    sf::RectangleShape   _bounds;
 
     ClickState      _clickState = ClickState::NONE;
 };
