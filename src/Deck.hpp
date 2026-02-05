@@ -6,11 +6,16 @@
 #include "Clickable.hpp"
 #include "Card.hpp"
 #include "TextureManager.hpp"
+#include "InputManager.hpp"
 #include "lib/Random.hpp"
 
 class Deck : public Clickable {
     private:
         std::map<Card::VegetableType, int> _cardCounts;
+        std::vector<Card*> _drawnCards;
+
+        InputManager* _inputManager;
+        TextureManager* _textureManager;
 
         // SFML Attributes
         sf::Texture*    _deckTexture;
@@ -22,10 +27,12 @@ class Deck : public Clickable {
         // ClickCallback   _onClickRelease;
 
     public:
-        Deck(TextureManager& textureManager);
+        Deck(InputManager& inputManager, TextureManager& textureManager);
         ~Deck();
 
-        Card::VegetableType drawCard();
+        Card* drawCard();
+
+        const std::vector<Card*>& getDrawnCards() const { return _drawnCards; }
 
         // Callbacks
         void setOnClick(ClickCallback callback);

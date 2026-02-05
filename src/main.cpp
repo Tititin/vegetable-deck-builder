@@ -13,7 +13,7 @@ int main()
     InputManager    inputManager;
     TextureManager  textureManager;
     Potager         potager(textureManager.getTexture("potager_slot"));
-    Deck            deck(textureManager);
+    Deck            deck(inputManager, textureManager);
     std::uniform_int_distribution<int> distribution(1, 9);
 
     potager.loadSlots();
@@ -27,11 +27,6 @@ int main()
     }
 
     inputManager.registerClickable(&deck);
-
-    // Prototype for drawing cards from the deck
-    // Card::VegetableType deckCardType = deck.drawCard();
-    // Card deckCard(deckCardType, textureManager);
-    // deckCard.setPosition({850.f, 800.f});
 
     window.setKeyRepeatEnabled(false); // Disable key repeat to prevent multiple draws from the deck when holding space
 
@@ -48,6 +43,9 @@ int main()
         window.clear();
         potager.draw(window);
         deck.draw(window);
+        for (auto* card : deck.getDrawnCards()) {
+            window.draw(card->getSprite());
+        }
         deck.drawContent(window);
         window.display();
     }
