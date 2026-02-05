@@ -93,7 +93,7 @@
 
 **Status:** Fully interactive multi-card deck builder with draggable cards and procedural generation. Core gameplay interaction model established, though card overlap collision handling needs refinement in next release to prevent cards from sticking together.
 
-## v0.4.0-alpha: Centralized Input Management & Double-Click Support
+## v0.4.0: Centralized Input Management & Double-Click Support
 
 ### New Features
 - **Centralized Input Manager** — New InputManager class for unified event handling:
