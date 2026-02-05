@@ -15,6 +15,7 @@ add_executable(game
     src/Card.cpp
     src/Deck.cpp
     src/Potager.cpp
+    src/InputManager.cpp
     src/TextureManager.cpp)
 
 add_custom_command(

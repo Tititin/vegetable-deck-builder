@@ -3,6 +3,7 @@
 #include "Card.hpp"
 #include "Potager.hpp"
 #include "Deck.hpp"
+#include "InputManager.hpp"
 #include "TextureManager.hpp"
 
 int main()
