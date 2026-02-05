@@ -23,6 +23,7 @@ public:
     virtual sf::FloatRect getGlobalBounds() const { return _sprite.getGlobalBounds(); }
     virtual sf::Vector2f getPosition() const { return _sprite.getPosition(); }
     virtual void setPosition(const sf::Vector2f& position) { _sprite.setPosition(position); }
+    virtual sf::RectangleShape& getBorder() { return _border; }
 
     virtual ClickState getClickState() const { return _clickState; }
     virtual void setClickState(ClickState state) { _clickState = state; }
@@ -30,6 +31,7 @@ public:
     virtual ClickCallback getOnClick() const { return _onClick; }
     virtual ClickCallback getOnClickRelease() const { return _onClickRelease; }
     virtual ClickCallback getOnDoubleClick() const { return _onDoubleClick; }
+    virtual bool isClicked() const { return _isClicked; }
     virtual bool contains(const sf::Vector2f& point) const { return _sprite.getGlobalBounds().contains(point); }
 
     virtual void click() = 0;
@@ -40,7 +42,9 @@ protected:
     ClickCallback _onDoubleClick;
 
     sf::Sprite      _sprite;
-    sf::RectangleShape   _bounds;
+    sf::RectangleShape   _border;
+
+    bool            _isClicked = false;
 
     ClickState      _clickState = ClickState::NONE;
 };
