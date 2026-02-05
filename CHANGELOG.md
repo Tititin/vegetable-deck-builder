@@ -92,3 +92,55 @@
 ---
 
 **Status:** Fully interactive multi-card deck builder with draggable cards and procedural generation. Core gameplay interaction model established, though card overlap collision handling needs refinement in next release to prevent cards from sticking together.
+
+## v0.4.0: Centralized Input Management & Double-Click Support
+
+### New Features
+- **Centralized Input Manager** — New InputManager class for unified event handling:
+  - Single point of control for all mouse interactions across clickable objects
+  - Automatic registration of interactive elements (cards, deck, etc.)
+  - Proper event delegation to appropriate callbacks
+- **Double-Click Detection** — Advanced click handling with double-click support:
+  - Time-based detection (300ms threshold) for rapid successive clicks on same element
+  - Separate callbacks for single-click and double-click actions
+  - Prevents accidental multi-clicks and improves user interaction precision
+- **Dynamic Card Drawing** — Enhanced Deck system for on-demand card creation:
+  - `drawCard()` now instantiates new Card objects dynamically
+  - Automatic registration with InputManager for immediate interactivity
+  - Proper memory management with deck-owned card lifecycle
+  - Visual positioning of drawn cards on screen
+
+### Architecture Updates
+- **Clickable Base Class Refinement** — Consolidated sprite management:
+  - Moved `sf::Sprite` to base `Clickable` class for inheritance
+  - Constructor-based texture initialization for all derived classes
+  - Unified interface for position, bounds, and event handling
+- **Event Handling Overhaul** — Complete rewrite of input processing:
+  - Eliminated individual `handleEvent` implementations in favor of centralized management
+  - Callback-based system with support for click, release, and double-click events
+  - Improved state management for click states across multiple elements
+- **Deck Class Enhancement** — Expanded functionality for card management:
+  - Access to InputManager and TextureManager for dynamic operations
+  - Container for tracking drawn cards with proper cleanup
+  - Integration with input system for seamless card interactions
+
+### Technical Improvements
+- **Memory Management** — Robust lifecycle handling:
+  - Automatic cleanup of dynamically allocated cards in Deck destructor
+  - Prevention of memory leaks from unregistered interactive elements
+- **Callback System Expansion** — Flexible event binding:
+  - Lambda-based callbacks for all interaction types
+  - Support for custom actions on single and double-clicks
+  - Easy extensibility for future interaction patterns
+
+### Bug Fixes
+- **Input State Conflicts** — Resolved click state synchronization issues:
+  - Proper reset of click states when switching between elements
+  - Elimination of stuck "pressed" states causing interaction glitches
+- **Event Propagation** — Fixed multiple element response problems:
+  - Only one element responds to click events at a time
+  - Correct release handling for non-targeted elements
+
+---
+
+**Status:** Advanced input system with double-click capabilities and dynamic card instantiation. Foundation laid for complex user interactions and procedural gameplay elements, with robust event management ensuring smooth user experience.
