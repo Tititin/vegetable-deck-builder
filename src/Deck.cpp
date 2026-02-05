@@ -1,7 +1,9 @@
 #include "Deck.hpp"
 
-Deck::Deck(TextureManager& textureManager)
+Deck::Deck(InputManager& inputManager, TextureManager& textureManager)
 :   Clickable(textureManager.getTexture("card_back")),
+    _inputManager(&inputManager),
+    _textureManager(&textureManager),
     _deckTexture(&textureManager.getTexture("card_back")),
     _deckFont("assets/fonts/CreatoDisplay-Regular.otf"),
     _deckCountText(_deckFont)
@@ -12,20 +14,25 @@ Deck::Deck(TextureManager& textureManager)
     _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
     setOnClick([this](Clickable&){
             this->setClickState(ClickState::PRESSED);
+            Card* drawnCard = drawCard();
+            if (drawnCard) {
+                drawnCard->setPosition({850.f, 800.f});
+            }
     });
     setOnClickRelease([this](Clickable&){
-        if (this->getClickState() == ClickState::PRESSED) {
-            drawCard();
             this->setClickState(ClickState::NONE);
-        }
     });
 }
 
 Deck::~Deck()
 {
+    for (auto* card : _drawnCards) {
+        delete card;
+    }
+    _drawnCards.clear();
 }
 
-Card::VegetableType Deck::drawCard()
+Card* Deck::drawCard()
 {
     Card::VegetableType drawnType;
     std::uniform_int_distribution<int> distribution(0, 0); // Currently only one type of card available
@@ -36,10 +43,14 @@ Card::VegetableType Deck::drawCard()
 
     if (_cardCounts[drawnType] > 0) {
         _cardCounts[drawnType] -= 1;
-        return drawnType;
+        // Créer une nouvelle carte
+        Card* newCard = new Card(drawnType, *_textureManager);
+        _drawnCards.push_back(newCard);
+        _inputManager->registerClickable(newCard);
+        return newCard;
     }
 
-    return (Card::VegetableType::ARTICHOKE);
+    return nullptr;
 }
 
 void Deck::setOnClick(ClickCallback callback)

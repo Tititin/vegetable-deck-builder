@@ -3,15 +3,17 @@
 #include "Card.hpp"
 #include "Potager.hpp"
 #include "Deck.hpp"
+#include "InputManager.hpp"
 #include "TextureManager.hpp"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({1920, 1200}), "SFML works!", sf::Style::None, sf::State::Fullscreen);
 
+    InputManager    inputManager;
     TextureManager  textureManager;
     Potager         potager(textureManager.getTexture("potager_slot"));
-    Deck            deck(textureManager);
+    Deck            deck(inputManager, textureManager);
     std::uniform_int_distribution<int> distribution(1, 9);
 
     potager.loadSlots();
@@ -20,13 +22,11 @@ int main()
         Card::VegetableType type = static_cast<Card::VegetableType>(distribution(Random::engine()));
         Card* newCard = new Card(type, textureManager);
         potager.addCard(newCard, i);
+        inputManager.registerClickable(newCard);
         newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
     }
 
-    // Prototype for drawing cards from the deck
-    // Card::VegetableType deckCardType = deck.drawCard();
-    // Card deckCard(deckCardType, textureManager);
-    // deckCard.setPosition({850.f, 800.f});
+    inputManager.registerClickable(&deck);
 
     window.setKeyRepeatEnabled(false); // Disable key repeat to prevent multiple draws from the deck when holding space
 
@@ -37,16 +37,16 @@ int main()
             if (event->is<sf::Event::Closed>() or sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
                 window.close();
 
-            for (int i = 0; i < potager.getElements().size(); i++) {
-                potager.getElements()[i]->handleEvent(event.value(), window);
-            }
+            inputManager.handleEvent(*event, window);
         }
 
         window.clear();
         potager.draw(window);
         deck.draw(window);
+        for (auto* card : deck.getDrawnCards()) {
+            window.draw(card->getSprite());
+        }
         deck.drawContent(window);
-        // window.draw(deckCard.getSprite());
         window.display();
     }
 }

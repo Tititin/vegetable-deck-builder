@@ -38,9 +38,6 @@ private:
     sf::Texture*    _backTexture;
     sf::Texture*    _frontTexture;
 
-    // Callbacks
-    ClickCallback   _onClick;
-    ClickCallback   _onClickRelease;
 
     // Game Attributes
     std::string     _name;

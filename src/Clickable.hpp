@@ -4,21 +4,15 @@
 #include <functional>
 
 class Clickable {
-protected:
-    enum class ClickState {
-        NONE,
-        PRESSED
-    };
-
-    std::function<void()> _onClick;
-
-    sf::Sprite      _sprite;
-
-    ClickState      _clickState = ClickState::NONE;
 public:
     //Callbacks
     using ClickCallback = std::function<void(Clickable&)>;
     using ClickReleaseCallback = std::function<void(Clickable&)>;
+
+    enum class ClickState {
+        NONE,
+        PRESSED
+    };
 
     Clickable(const sf::Texture& texture) : _sprite(texture) {}
 
@@ -33,5 +27,15 @@ public:
     virtual ClickState getClickState() const { return _clickState; }
     virtual void setClickState(ClickState state) { _clickState = state; }
 
+    virtual ClickCallback getOnClick() const { return _onClick; }
+    virtual ClickCallback getOnClickRelease() const { return _onClickRelease; }
     virtual bool contains(const sf::Vector2f& point) const { return _sprite.getGlobalBounds().contains(point); }
+
+protected:
+    ClickCallback _onClick;
+    ClickCallback _onClickRelease;
+
+    sf::Sprite      _sprite;
+
+    ClickState      _clickState = ClickState::NONE;
 };
