@@ -17,24 +17,37 @@ void InputManager::handleEvent(const sf::Event &event, const sf::RenderWindow &w
             {
                 if (clickable->contains(mousePos))
                 {
-                    if (clickable->getOnClick())
+                    bool isDoubleClick = (_lastClicked == clickable && _lastClickClock.getElapsedTime() < _doubleClickThreshold);
+                    
+                    if (isDoubleClick && clickable->getOnDoubleClick())
+                    {
+                        clickable->getOnDoubleClick()(*clickable);
+                    }
+                    else if (clickable->getOnClick())
+                    {
                         clickable->getOnClick()(*clickable);
+                    }
+                    
+                    // Release other pressed clickables
+                    for (auto* otherClickable : _clickables)
+                    {
+                        if (otherClickable != clickable && otherClickable->getClickState() == Clickable::ClickState::PRESSED)
+                        {
+                            if (otherClickable->getOnClickRelease())
+                                otherClickable->getOnClickRelease()(*otherClickable);
+                        }
+                    }
+                    
+                    // Update last click
+                    _lastClicked = clickable;
+                    _lastClickClock.restart();
+                    
                     break; // Assuming only one clickable should respond to a click
                 }
-            }
-        }
-    }
-    if (const auto mouseButtonReleased = event.getIf<sf::Event::MouseButtonReleased>())
-    {
-        if (mouseButtonReleased->button == sf::Mouse::Button::Left)
-        {
-            for (auto* clickable : _clickables)
-            {
-                if (clickable->getClickState() == Clickable::ClickState::PRESSED)
+                else
                 {
                     if (clickable->getOnClickRelease())
                         clickable->getOnClickRelease()(*clickable);
-                    break; // Assuming only one clickable should respond to a click release
                 }
             }
         }

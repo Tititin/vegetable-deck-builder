@@ -67,6 +67,10 @@ void Deck::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
 {
 }
 
+void Deck::click()
+{
+}
+
 void Deck::drawContent(sf::RenderTarget &target)
 {
     std::string countText = "Deck Content:\n";

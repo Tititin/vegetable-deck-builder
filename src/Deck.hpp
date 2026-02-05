@@ -40,6 +40,7 @@ class Deck : public Clickable {
 
         // Event Handling
         void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
+        void click();
 
         // Display
         void draw(sf::RenderTarget& target) const { target.draw(_sprite); }
