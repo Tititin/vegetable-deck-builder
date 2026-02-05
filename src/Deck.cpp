@@ -1,15 +1,24 @@
 #include "Deck.hpp"
 
 Deck::Deck(TextureManager& textureManager)
-:   _deckSprite(textureManager.getTexture("card_back")),
+:   Clickable(textureManager.getTexture("card_back")),
     _deckTexture(&textureManager.getTexture("card_back")),
     _deckFont("assets/fonts/CreatoDisplay-Regular.otf"),
     _deckCountText(_deckFont)
 {
     _cardCounts[Card::VegetableType::ARTICHOKE] = 10;
 
-    _deckSprite.setPosition({600.f, 800.f});
-    _deckSprite.setScale({0.309f, 0.309f}); // Scale to fit the window
+    _sprite.setPosition({600.f, 800.f});
+    _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
+    setOnClick([this](Clickable&){
+            this->setClickState(ClickState::PRESSED);
+    });
+    setOnClickRelease([this](Clickable&){
+        if (this->getClickState() == ClickState::PRESSED) {
+            drawCard();
+            this->setClickState(ClickState::NONE);
+        }
+    });
 }
 
 Deck::~Deck()
@@ -26,11 +35,25 @@ Card::VegetableType Deck::drawCard()
         drawnType = static_cast<Card::VegetableType>(distribution(Random::engine()));
 
     if (_cardCounts[drawnType] > 0) {
-        _cardCounts[drawnType]--;
+        _cardCounts[drawnType] -= 1;
         return drawnType;
     }
 
     return (Card::VegetableType::ARTICHOKE);
+}
+
+void Deck::setOnClick(ClickCallback callback)
+{
+    _onClick = std::move(callback);
+}
+
+void Deck::setOnClickRelease(ClickReleaseCallback callback)
+{
+    _onClickRelease = std::move(callback);
+}
+
+void Deck::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
+{
 }
 
 void Deck::drawContent(sf::RenderTarget &target)
@@ -77,6 +100,6 @@ void Deck::drawContent(sf::RenderTarget &target)
     }
     _deckCountText.setString(countText);
     _deckCountText.setCharacterSize(48);
-    _deckCountText.setPosition({ _deckSprite.getPosition().x - 350.f, _deckSprite.getPosition().y });
+    _deckCountText.setPosition({ _sprite.getPosition().x - 350.f, _sprite.getPosition().y });
     target.draw(_deckCountText);
 }

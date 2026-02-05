@@ -3,19 +3,23 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
+#include "Clickable.hpp"
 #include "Card.hpp"
 #include "TextureManager.hpp"
 #include "lib/Random.hpp"
 
-class Deck {
+class Deck : public Clickable {
     private:
         std::map<Card::VegetableType, int> _cardCounts;
 
         // SFML Attributes
-        sf::Sprite      _deckSprite;
         sf::Texture*    _deckTexture;
         sf::Font        _deckFont;
         sf::Text        _deckCountText; // For v0.4.0 only: display number of cards left by type
+
+        // Callbacks
+        ClickCallback   _onClick;
+        ClickCallback   _onClickRelease;
 
     public:
         Deck(TextureManager& textureManager);
@@ -23,13 +27,14 @@ class Deck {
 
         Card::VegetableType drawCard();
 
-        // SFML Getters
-        sf::Sprite& getSprite() { return _deckSprite; }
+        // Callbacks
+        void setOnClick(ClickCallback callback);
+        void setOnClickRelease(ClickReleaseCallback callback);
 
-        // SFML Setters
-        void setPosition(const sf::Vector2f& position) { _deckSprite.setPosition(position); }
+        // Event Handling
+        void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
 
         // Display
-        void draw(sf::RenderTarget& target) const { target.draw(_deckSprite); }
+        void draw(sf::RenderTarget& target) const { target.draw(_sprite); }
         void drawContent(sf::RenderTarget& target);
 };

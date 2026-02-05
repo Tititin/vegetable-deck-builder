@@ -24,9 +24,9 @@ int main()
     }
 
     // Prototype for drawing cards from the deck
-    Card::VegetableType deckCardType = deck.drawCard();
-    Card deckCard(deckCardType, textureManager);
-    deckCard.setPosition({850.f, 800.f});
+    // Card::VegetableType deckCardType = deck.drawCard();
+    // Card deckCard(deckCardType, textureManager);
+    // deckCard.setPosition({850.f, 800.f});
 
     window.setKeyRepeatEnabled(false); // Disable key repeat to prevent multiple draws from the deck when holding space
 
@@ -36,13 +36,6 @@ int main()
         {
             if (event->is<sf::Event::Closed>() or sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
                 window.close();
-            
-                // Prototype for drawing cards from the deck via space key
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
-                deckCardType = deck.drawCard();
-                deckCard = Card(deckCardType, textureManager);
-                deckCard.setPosition({1100.f, 800.f});
-            }
 
             for (int i = 0; i < potager.getElements().size(); i++) {
                 potager.getElements()[i]->handleEvent(event.value(), window);
@@ -53,7 +46,7 @@ int main()
         potager.draw(window);
         deck.draw(window);
         deck.drawContent(window);
-        window.draw(deckCard.getSprite());
+        // window.draw(deckCard.getSprite());
         window.display();
     }
 }

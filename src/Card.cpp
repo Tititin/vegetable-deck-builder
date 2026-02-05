@@ -1,7 +1,7 @@
 #include "Card.hpp"
 
 Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
-    :   _cardSprite(textureManager.getTexture("card_back")),
+    :   Clickable(textureManager.getTexture("card_back")),
         _backTexture(&textureManager.getTexture("card_back")),
         _type(type)
 {
@@ -47,7 +47,7 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
             break;
     }
     _frontTexture = &textureManager.getTexture("card_" + _name);
-    _cardSprite.setScale({0.309f, 0.309f}); // Scale to fit the window
+    _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
     setOnClick([this](Clickable&){
             this->setClickState(ClickState::PRESSED);
     });
@@ -79,7 +79,7 @@ void Card::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
         {
             const auto mousePos = window.mapPixelToCoords({mouseButtonPressed->position});
 
-            if (_cardSprite.getGlobalBounds().contains(mousePos))
+            if (_sprite.getGlobalBounds().contains(mousePos))
             {
                 if (_onClick)
                     _onClick(*this);
@@ -108,12 +108,12 @@ void Card::setClickState(ClickState state)
 
 void Card::showFront()
 {
-    _cardSprite.setTexture(*_frontTexture);
+    _sprite.setTexture(*_frontTexture);
     _currentFace = Face::FRONT;
 }
 
 void Card::showBack()
 {
-    _cardSprite.setTexture(*_backTexture);
+    _sprite.setTexture(*_backTexture);
     _currentFace = Face::BACK;
 }
