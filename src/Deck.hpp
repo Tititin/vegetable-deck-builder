@@ -18,8 +18,8 @@ class Deck : public Clickable {
         sf::Text        _deckCountText; // For v0.4.0 only: display number of cards left by type
 
         // Callbacks
-        ClickCallback   _onClick;
-        ClickCallback   _onClickRelease;
+        // ClickCallback   _onClick;
+        // ClickCallback   _onClickRelease;
 
     public:
         Deck(TextureManager& textureManager);

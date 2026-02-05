@@ -24,4 +24,19 @@ void InputManager::handleEvent(const sf::Event &event, const sf::RenderWindow &w
             }
         }
     }
+    if (const auto mouseButtonReleased = event.getIf<sf::Event::MouseButtonReleased>())
+    {
+        if (mouseButtonReleased->button == sf::Mouse::Button::Left)
+        {
+            for (auto* clickable : _clickables)
+            {
+                if (clickable->getClickState() == Clickable::ClickState::PRESSED)
+                {
+                    if (clickable->getOnClickRelease())
+                        clickable->getOnClickRelease()(*clickable);
+                    break; // Assuming only one clickable should respond to a click release
+                }
+            }
+        }
+    }
 }

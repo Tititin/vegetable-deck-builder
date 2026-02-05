@@ -26,6 +26,8 @@ int main()
         newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
     }
 
+    inputManager.registerClickable(&deck);
+
     // Prototype for drawing cards from the deck
     // Card::VegetableType deckCardType = deck.drawCard();
     // Card deckCard(deckCardType, textureManager);
