@@ -20,9 +20,9 @@ public:
         EGGPLANT,
         PEAS,
         CARROT,
-        // BROCCOLI,
+        BROCCOLI,
         LEEK,
-        // RHUBARB,
+        RHUBARB,
         BELLPEPPER,
         BEETROOT
     };
@@ -34,46 +34,30 @@ private:
         BACK
     };
 
-    enum class ClickState {
-        NONE,
-        PRESSED
-    };
-
     // SFML Attributes
-    sf::Sprite      _cardSprite;
     sf::Texture*    _backTexture;
     sf::Texture*    _frontTexture;
 
-    // Callbacks
-    ClickCallback   _onClick;
-    ClickCallback   _onClickRelease;
 
     // Game Attributes
     std::string     _name;
     Face            _currentFace = Face::BACK;
-    ClickState      _clickState = ClickState::NONE;
     VegetableType   _type;
 
 public:
     Card(const Card::VegetableType& type, TextureManager& textureManager);
     ~Card();
 
-    // SFML Getters
-    sf::Sprite& getSprite() { return _cardSprite; }
-    sf::FloatRect getGlobalBounds() const { return _cardSprite.getGlobalBounds(); }
-    sf::Vector2f getPosition() const { return _cardSprite.getPosition(); }
-
-    // SFML Setters
-    void    setPosition(const sf::Vector2f& position) { _cardSprite.setPosition(position); }
-
     // Callbacks
     void setOnClick(ClickCallback callback);
     void setOnClickRelease(ClickReleaseCallback callback);
+    void setOnDoubleClick(ClickCallback callback);
 
     // Event Handling
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
     void flipCard();
     void setClickState(ClickState state);
+    void click();
 
     // Display
     void showFront();

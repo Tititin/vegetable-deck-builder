@@ -1,7 +1,7 @@
 #include "Card.hpp"
 
 Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
-    :   _cardSprite(textureManager.getTexture("card_back")),
+    :   Clickable(textureManager.getTexture("card_back")),
         _backTexture(&textureManager.getTexture("card_back")),
         _type(type)
 {
@@ -27,15 +27,15 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
         case VegetableType::CARROT:
             _name = "carrot";
             break;
-        // case VegetableType::BROCCOLI:
-        //     _name = "broccoli";
-        //     break;
+        case VegetableType::BROCCOLI:
+            _name = "broccoli";
+            break;
         case VegetableType::LEEK:
             _name = "leek";
             break;
-        // case VegetableType::RHUBARB:
-        //     _name = "rhubarb";
-        //     break;
+        case VegetableType::RHUBARB:
+            _name = "rhubarb";
+            break;
         case VegetableType::BELLPEPPER:
             _name = "bellpepper";
             break;
@@ -47,12 +47,22 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
             break;
     }
     _frontTexture = &textureManager.getTexture("card_" + _name);
-    _cardSprite.setScale({0.309f, 0.309f}); // Scale to fit the window
+    _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
+
+    _border.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y});
+    _border.setOutlineColor(sf::Color::Yellow);
+    _border.setOutlineThickness(2.f);
+    _border.setFillColor(sf::Color::Transparent);
     setOnClick([this](Clickable&){
-            this->setClickState(ClickState::PRESSED);
+            click();
     });
     setOnClickRelease([this](Clickable&){
+        click();
+    });
+    setOnDoubleClick([this](Clickable&){
+        flipCard();
         this->setClickState(ClickState::NONE);
+        _isClicked = false;
     });
     flipCard();
 }
@@ -71,6 +81,11 @@ void Card::setOnClickRelease(ClickReleaseCallback callback)
     _onClickRelease = std::move(callback);
 }
 
+void Card::setOnDoubleClick(ClickCallback callback)
+{
+    _onDoubleClick = std::move(callback);
+}
+
 void Card::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
 {
     if (const auto mouseButtonPressed = event.getIf<sf::Event::MouseButtonPressed>())
@@ -79,7 +94,7 @@ void Card::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
         {
             const auto mousePos = window.mapPixelToCoords({mouseButtonPressed->position});
 
-            if (_cardSprite.getGlobalBounds().contains(mousePos))
+            if (_sprite.getGlobalBounds().contains(mousePos))
             {
                 if (_onClick)
                     _onClick(*this);
@@ -94,15 +109,6 @@ void Card::handleEvent(const sf::Event& event, const sf::RenderWindow& window)
                 _onClickRelease(*this);
         }
     }
-    if (const auto mouseMoved = event.getIf<sf::Event::MouseMoved>())
-    {
-        const auto mousePos = window.mapPixelToCoords({mouseMoved->position});
-
-        if (_clickState == ClickState::PRESSED)
-        {
-            _cardSprite.setPosition(mousePos - sf::Vector2f(_cardSprite.getGlobalBounds().size.x / 2, _cardSprite.getGlobalBounds().size.y / 2));
-        }
-    }
 }
 
 void Card::flipCard()
@@ -115,14 +121,29 @@ void Card::setClickState(ClickState state)
     _clickState = state;
 }
 
+void Card::click()
+{
+    if (this->getClickState() == ClickState::NONE)
+    {
+        this->setClickState(ClickState::PRESSED);
+        _isClicked = true;
+        _border.setPosition(_sprite.getPosition());
+    }
+    else
+    {
+        this->setClickState(ClickState::NONE);
+        _isClicked = false;
+    }
+}
+
 void Card::showFront()
 {
-    _cardSprite.setTexture(*_frontTexture);
+    _sprite.setTexture(*_frontTexture);
     _currentFace = Face::FRONT;
 }
 
 void Card::showBack()
 {
-    _cardSprite.setTexture(*_backTexture);
+    _sprite.setTexture(*_backTexture);
     _currentFace = Face::BACK;
 }

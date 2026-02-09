@@ -13,7 +13,9 @@ find_package(SFML CONFIG REQUIRED COMPONENTS Graphics Window System)
 add_executable(game 
     src/main.cpp
     src/Card.cpp
+    src/Deck.cpp
     src/Potager.cpp
+    src/InputManager.cpp
     src/TextureManager.cpp)
 
 add_custom_command(
