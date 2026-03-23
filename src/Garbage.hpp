@@ -10,4 +10,4 @@
 
 class Garbage : public Clickable {
 
-}
+};

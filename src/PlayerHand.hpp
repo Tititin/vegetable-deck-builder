@@ -10,4 +10,4 @@
 
 class PlayerHand : public Clickable {
 
-}
+};
