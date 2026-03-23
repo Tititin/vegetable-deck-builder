@@ -15,6 +15,8 @@ add_executable(game
     src/Card.cpp
     src/Deck.cpp
     src/Potager.cpp
+    src/PlayerHand.cpp
+    src/Garbage.cpp
     src/InputManager.cpp
     src/TextureManager.cpp)
 
