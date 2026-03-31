@@ -8,16 +8,16 @@ int main()
 
     Game game;
 
-    Potager         potager(game.getTextureManager().getTexture("potager_slot"));
+    // Potager         potager(game.getTextureManager().getTexture("potager_slot"));
     Deck            deck(game.getInputManager(), game.getTextureManager());
     std::uniform_int_distribution<int> distribution(1, 11);
 
-    potager.loadSlots();
+    game.getPotager().loadSlots();
 
     for (int i = 0; i < 5; i++) {
         Card::VegetableType type = static_cast<Card::VegetableType>(distribution(Random::engine()));
         Card* newCard = new Card(type, game.getTextureManager());
-        potager.addCard(newCard, i);
+        game.getPotager().addCard(newCard, i);
         game.getInputManager().registerClickable(newCard);
         newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
     }
@@ -37,7 +37,7 @@ int main()
         }
 
         window.clear();
-        potager.draw(window);
+        game.getPotager().draw(window);
         deck.draw(window);
         for (auto* card : deck.getDrawnCards()) {
             window.draw(card->getSprite());
