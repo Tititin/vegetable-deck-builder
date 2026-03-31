@@ -9,7 +9,7 @@ int main()
     Game game;
 
     // Potager         potager(game.getTextureManager().getTexture("potager_slot"));
-    Deck            deck(game.getInputManager(), game.getTextureManager());
+    // Deck            deck(game.getInputManager(), game.getTextureManager());
     std::uniform_int_distribution<int> distribution(1, 11);
 
     game.getPotager().loadSlots();
@@ -22,7 +22,7 @@ int main()
         newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
     }
 
-    game.getInputManager().registerClickable(&deck);
+    game.getInputManager().registerClickable(&game.getDeck()); // Maybe do this internally in Game
 
     window.setKeyRepeatEnabled(false); // Disable key repeat to prevent multiple draws from the deck when holding space
 
@@ -38,11 +38,11 @@ int main()
 
         window.clear();
         game.getPotager().draw(window);
-        deck.draw(window);
-        for (auto* card : deck.getDrawnCards()) {
+        game.getDeck().draw(window);
+        for (auto* card : game.getDeck().getDrawnCards()) {
             window.draw(card->getSprite());
         }
-        deck.drawContent(window);
+        game.getDeck().drawContent(window);
         window.display();
     }
 }

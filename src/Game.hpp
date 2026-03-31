@@ -14,7 +14,7 @@ private:
     InputManager    _inputManager;
     TextureManager  _textureManager;
     Potager         _potager;
-    // Deck            _deck;
+    Deck            _deck;
     // Garbage         _garbage;
     // PlayerHand      _playerHand;
 
@@ -25,7 +25,7 @@ public:
     InputManager& getInputManager() { return _inputManager; }
     TextureManager& getTextureManager() { return _textureManager; }
     Potager& getPotager() { return _potager; }
-    // Deck& getDeck() { return _deck; }
+    Deck& getDeck() { return _deck; }
     // Garbage& getGarbage() { return _garbage; }
     // PlayerHand& getPlayerHand() { return _playerHand; }
 };
