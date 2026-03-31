@@ -11,8 +11,8 @@
 
 class Game {
 private:
-    // InputManager    _inputManager;
-    // TextureManager  _textureManager;
+    InputManager    _inputManager;
+    TextureManager  _textureManager;
     // Potager         _potager;
     // Deck            _deck;
     // Garbage         _garbage;
@@ -21,4 +21,7 @@ private:
 public:
     Game();
     ~Game();
+
+    InputManager& getInputManager() { return _inputManager; }
+    TextureManager& getTextureManager() { return _textureManager; }
 };
