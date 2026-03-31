@@ -1,10 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "lib/Random.hpp"
-#include "Card.hpp"
-#include "Potager.hpp"
-#include "Deck.hpp"
-#include "InputManager.hpp"
-#include "TextureManager.hpp"
+#include "Game.hpp"
 
 int main()
 {
