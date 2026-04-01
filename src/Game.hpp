@@ -1,12 +1,11 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "Card.hpp"
 #include "Deck.hpp"
 #include "Garbage.hpp"
+#include "InputManager.hpp"
 #include "PlayerHand.hpp"
 #include "Potager.hpp"
-#include "InputManager.hpp"
 #include "TextureManager.hpp"
 
 class Game {
@@ -30,6 +29,8 @@ public:
     // PlayerHand& getPlayerHand() { return _playerHand; }
 
     void init();
+
+    void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
 
     void display(sf::RenderTarget& target);
 };

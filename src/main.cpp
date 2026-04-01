@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include "lib/Random.hpp"
 #include "Game.hpp"
 
@@ -31,18 +30,11 @@ int main()
             if (event->is<sf::Event::Closed>() or sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
                 window.close();
 
-            game.getInputManager().handleEvent(*event, window);
+            game.handleEvent(*event, window);
             cursor.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
         }
 
         game.display(window);
-        // window.clear();
-        // game.getPotager().draw(window);
-        // game.getDeck().draw(window);
-        // for (auto* card : game.getDeck().getDrawnCards()) {
-        //     window.draw(card->getSprite());
-        // }
-        // game.getDeck().drawContent(window);
         window.draw(cursor);
         window.display();
     }
