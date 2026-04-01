@@ -18,5 +18,5 @@ public:
 
     void init();
 
-    Card* createCard(const Card::VegetableType& type);
+    Card* createCard();
 };

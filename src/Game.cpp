@@ -13,15 +13,12 @@ Game::~Game()
 
 void Game::init()
 {
-    std::uniform_int_distribution<int> distribution(1, 11);
-
     _cardManager.init();
     _inputManager.registerClickable(&_deck);
     _potager.loadSlots();
 
     for (int i = 0; i < 5; i++) {
-        Card::VegetableType type = static_cast<Card::VegetableType>(distribution(Random::engine()));
-        Card* newCard = _cardManager.createCard(type);
+        Card* newCard = _cardManager.createCard();
         _potager.addCard(newCard, i);
         _inputManager.registerClickable(newCard);
         newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });

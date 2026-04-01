@@ -1,3 +1,4 @@
+#include "lib/Random.hpp"
 #include "CardManager.hpp"
 
 CardManager::CardManager(TextureManager &textureManager)
@@ -25,7 +26,10 @@ void CardManager::init()
     _remainingCardsToCreate[Card::VegetableType::BEETROOT] = 6;
 }
 
-Card *CardManager::createCard(const Card::VegetableType &type)
+Card *CardManager::createCard()
 {
+    std::uniform_int_distribution<int> distribution(1, 11);
+    Card::VegetableType type = static_cast<Card::VegetableType>(distribution(Random::engine()));
+
     return new Card(type, *_textureManager);
 }
