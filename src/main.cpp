@@ -11,17 +11,15 @@ int main()
 
     std::uniform_int_distribution<int> distribution(1, 11);
 
-    game.getPotager().loadSlots();
+    game.init();
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++) { // Will be done by CardManager in v0.5.0
         Card::VegetableType type = static_cast<Card::VegetableType>(distribution(Random::engine()));
         Card* newCard = new Card(type, game.getTextureManager());
         game.getPotager().addCard(newCard, i);
         game.getInputManager().registerClickable(newCard);
         newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
     }
-
-    game.getInputManager().registerClickable(&game.getDeck()); // Maybe do this internally in Game
 
     window.setKeyRepeatEnabled(false); // Disable key repeat to prevent multiple draws from the deck when holding space
     cursor.setFillColor(sf::Color::Red);
@@ -37,13 +35,14 @@ int main()
             cursor.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
         }
 
-        window.clear();
-        game.getPotager().draw(window);
-        game.getDeck().draw(window);
-        for (auto* card : game.getDeck().getDrawnCards()) {
-            window.draw(card->getSprite());
-        }
-        game.getDeck().drawContent(window);
+        game.display(window);
+        // window.clear();
+        // game.getPotager().draw(window);
+        // game.getDeck().draw(window);
+        // for (auto* card : game.getDeck().getDrawnCards()) {
+        //     window.draw(card->getSprite());
+        // }
+        // game.getDeck().drawContent(window);
         window.draw(cursor);
         window.display();
     }

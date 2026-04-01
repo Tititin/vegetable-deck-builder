@@ -28,4 +28,8 @@ public:
     Deck& getDeck() { return _deck; }
     // Garbage& getGarbage() { return _garbage; }
     // PlayerHand& getPlayerHand() { return _playerHand; }
+
+    void init();
+
+    void display(sf::RenderTarget& target);
 };
