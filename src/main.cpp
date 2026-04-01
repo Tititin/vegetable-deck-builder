@@ -8,8 +8,6 @@ int main()
 
     Game game;
 
-    // Potager         potager(game.getTextureManager().getTexture("potager_slot"));
-    // Deck            deck(game.getInputManager(), game.getTextureManager());
     std::uniform_int_distribution<int> distribution(1, 11);
 
     game.getPotager().loadSlots();
