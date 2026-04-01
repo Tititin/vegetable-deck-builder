@@ -43,7 +43,7 @@ Card* Deck::drawCard()
 
     if (_cardCounts[drawnType] > 0) {
         _cardCounts[drawnType] -= 1;
-        // Créer une nouvelle carte
+        // Créer une nouvelle carte -- > à faire dans CardManager dans v0.5.0 car HORRIBLE !
         Card* newCard = new Card(drawnType, *_textureManager);
         _drawnCards.push_back(newCard);
         _inputManager->registerClickable(newCard);
