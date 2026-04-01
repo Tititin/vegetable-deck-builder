@@ -29,7 +29,13 @@ void CardManager::init()
 Card *CardManager::createCard()
 {
     std::uniform_int_distribution<int> distribution(1, 11);
-    Card::VegetableType type = static_cast<Card::VegetableType>(distribution(Random::engine()));
+    Card::VegetableType type;
+    
+    do
+    {
+        type = static_cast<Card::VegetableType>(distribution(Random::engine()));
+    } while (_remainingCardsToCreate[type] == 0);
+    _remainingCardsToCreate[type] -= 1;
 
     return new Card(type, *_textureManager);
 }
