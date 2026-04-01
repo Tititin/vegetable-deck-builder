@@ -5,6 +5,7 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({1920, 1200}), "SFML works!", sf::Style::None, sf::State::Fullscreen);
+    sf::CircleShape cursor(3.f);
 
     Game game;
 
@@ -23,6 +24,7 @@ int main()
     game.getInputManager().registerClickable(&game.getDeck()); // Maybe do this internally in Game
 
     window.setKeyRepeatEnabled(false); // Disable key repeat to prevent multiple draws from the deck when holding space
+    cursor.setFillColor(sf::Color::Red);
 
     while (window.isOpen())
     {
@@ -32,6 +34,7 @@ int main()
                 window.close();
 
             game.getInputManager().handleEvent(*event, window);
+            cursor.setPosition(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window)));
         }
 
         window.clear();
@@ -41,6 +44,7 @@ int main()
             window.draw(card->getSprite());
         }
         game.getDeck().drawContent(window);
+        window.draw(cursor);
         window.display();
     }
 }
