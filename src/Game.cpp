@@ -2,7 +2,8 @@
 
 Game::Game()
     :   _potager(_textureManager.getTexture("potager_slot")),
-        _deck(_inputManager, _textureManager)
+        _deck(_inputManager, _textureManager),
+        _cardManager(_textureManager)
 {
 }
 
@@ -12,8 +13,19 @@ Game::~Game()
 
 void Game::init()
 {
-    _potager.loadSlots();
+    std::uniform_int_distribution<int> distribution(1, 11);
+
+    _cardManager.init();
     _inputManager.registerClickable(&_deck);
+    _potager.loadSlots();
+
+    for (int i = 0; i < 5; i++) {
+        Card::VegetableType type = static_cast<Card::VegetableType>(distribution(Random::engine()));
+        Card* newCard = new Card(type, _textureManager);
+        _potager.addCard(newCard, i);
+        _inputManager.registerClickable(newCard);
+        newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
+    }
 }
 
 void Game::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
