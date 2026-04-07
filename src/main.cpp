@@ -8,17 +8,7 @@ int main()
 
     Game game;
 
-    std::uniform_int_distribution<int> distribution(1, 11);
-
     game.init();
-
-    for (int i = 0; i < 5; i++) { // Will be done by CardManager in v0.5.0
-        Card::VegetableType type = static_cast<Card::VegetableType>(distribution(Random::engine()));
-        Card* newCard = new Card(type, game.getTextureManager());
-        game.getPotager().addCard(newCard, i);
-        game.getInputManager().registerClickable(newCard);
-        newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
-    }
 
     window.setKeyRepeatEnabled(false); // Disable key repeat to prevent multiple draws from the deck when holding space
     cursor.setFillColor(sf::Color::Red);

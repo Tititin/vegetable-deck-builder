@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Card.hpp"
+#include "CardManager.hpp"
 #include "Deck.hpp"
 #include "Garbage.hpp"
 #include "InputManager.hpp"
@@ -10,6 +11,7 @@
 
 class Game {
 private:
+    CardManager     _cardManager;
     InputManager    _inputManager;
     TextureManager  _textureManager;
     Potager         _potager;
@@ -21,6 +23,7 @@ public:
     Game();
     ~Game();
 
+    CardManager& getCardManager() { return _cardManager; }
     InputManager& getInputManager() { return _inputManager; }
     TextureManager& getTextureManager() { return _textureManager; }
     Potager& getPotager() { return _potager; }

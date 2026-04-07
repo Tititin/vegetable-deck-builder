@@ -2,7 +2,8 @@
 
 Game::Game()
     :   _potager(_textureManager.getTexture("potager_slot")),
-        _deck(_inputManager, _textureManager)
+        _deck(_inputManager, _textureManager),
+        _cardManager(_textureManager)
 {
 }
 
@@ -12,8 +13,16 @@ Game::~Game()
 
 void Game::init()
 {
-    _potager.loadSlots();
+    _cardManager.init();
     _inputManager.registerClickable(&_deck);
+    _potager.loadSlots();
+
+    for (int i = 0; i < 5; i++) {
+        Card* newCard = _cardManager.createCard();
+        _potager.addCard(newCard, i);
+        _inputManager.registerClickable(newCard);
+        newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
+    }
 }
 
 void Game::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
