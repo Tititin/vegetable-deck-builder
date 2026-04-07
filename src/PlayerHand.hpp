@@ -8,6 +8,13 @@
 #include "TextureManager.hpp"
 #include "InputManager.hpp"
 
-class PlayerHand : public Clickable {
+class PlayerHand {
+    private:
+        std::vector<Card*> _cards; // Cards currently in the player's hand
 
+        InputManager* _inputManager;
+        TextureManager* _textureManager;
+    public:
+        PlayerHand(InputManager& inputManager, TextureManager& textureManager);
+        ~PlayerHand();
 };
