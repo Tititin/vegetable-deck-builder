@@ -23,6 +23,10 @@ void Game::init()
         _inputManager.registerClickable(newCard);
         newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
     }
+    for (int i = 0; i < 10; i++) {
+        Card* newCard = _cardManager.createCard(Card::VegetableType::ARTICHOKE);
+        _deck.addCard(newCard);
+    }
 }
 
 void Game::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
@@ -35,8 +39,5 @@ void Game::display(sf::RenderTarget &target)
     target.clear();
     _potager.draw(target);
     _deck.draw(target);
-    for (auto* card : _deck.getDrawnCards()) { // Maybe do this in Deck::draw() in v0.5.0 ?
-        target.draw(card->getSprite());
-    }
     _deck.drawContent(target);
 }
