@@ -11,6 +11,7 @@ int main()
     game.init();
 
     window.setKeyRepeatEnabled(false); // Disable key repeat to prevent multiple draws from the deck when holding space
+    window.setMouseCursorVisible(false); // Hide the default mouse cursor
     cursor.setFillColor(sf::Color::Red);
 
     while (window.isOpen())
