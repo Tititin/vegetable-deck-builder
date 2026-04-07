@@ -39,3 +39,12 @@ Card *CardManager::createCard()
 
     return new Card(type, *_textureManager);
 }
+
+Card *CardManager::createCard(const Card::VegetableType &type)
+{
+    if (_remainingCardsToCreate[type] > 0) {
+        _remainingCardsToCreate[type] -= 1;
+        return new Card(type, *_textureManager);
+    }
+    return nullptr;
+}
