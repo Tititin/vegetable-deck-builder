@@ -39,8 +39,5 @@ void Game::display(sf::RenderTarget &target)
     target.clear();
     _potager.draw(target);
     _deck.draw(target);
-    // for (auto* card : _deck.getCards()) { // Maybe do this in Deck::draw() in v0.5.0 ?
-    //     target.draw(card->getSprite());
-    // }
     _deck.drawContent(target);
 }
