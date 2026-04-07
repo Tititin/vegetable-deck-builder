@@ -10,7 +10,7 @@ Deck::Deck(InputManager& inputManager, TextureManager& textureManager)
 {
     // _cardCounts[Card::VegetableType::ARTICHOKE] = 10;
 
-    _sprite.setPosition({600.f, 800.f});
+    _sprite.setPosition({50.f, 800.f});
     _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
     setOnClick([this](Clickable&){
             this->setClickState(ClickState::PRESSED);
@@ -120,6 +120,6 @@ void Deck::drawContent(sf::RenderTarget &target)
     }
     _deckCountText.setString(countText);
     _deckCountText.setCharacterSize(48);
-    _deckCountText.setPosition({ _sprite.getPosition().x - 350.f, _sprite.getPosition().y });
+    _deckCountText.setPosition({50.f, 50.f});
     target.draw(_deckCountText);
 }
