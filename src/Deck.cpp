@@ -8,8 +8,6 @@ Deck::Deck(InputManager& inputManager, TextureManager& textureManager)
     _deckFont("assets/fonts/CreatoDisplay-Regular.otf"),
     _deckCountText(_deckFont)
 {
-    // _cardCounts[Card::VegetableType::ARTICHOKE] = 10;
-
     _sprite.setPosition({50.f, 800.f});
     _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
     setOnClick([this](Clickable&){

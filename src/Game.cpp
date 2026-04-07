@@ -23,8 +23,8 @@ void Game::init()
         _inputManager.registerClickable(newCard);
         newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
     }
-    for (int i = 0; i < 6; i++) {
-        Card* newCard = _cardManager.createCard(Card::VegetableType::ONION);
+    for (int i = 0; i < 10; i++) {
+        Card* newCard = _cardManager.createCard(Card::VegetableType::ARTICHOKE);
         _deck.addCard(newCard);
     }
 }
