@@ -71,6 +71,10 @@ Card::~Card()
 {
 }
 
+void Card::init()
+{
+}
+
 void Card::setOnClick(ClickCallback callback)
 {
     _onClick = std::move(callback);

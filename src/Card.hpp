@@ -48,6 +48,8 @@ public:
     Card(const Card::VegetableType& type, TextureManager& textureManager);
     ~Card();
 
+    void init();
+
     // Callbacks
     void setOnClick(ClickCallback callback);
     void setOnClickRelease(ClickReleaseCallback callback);

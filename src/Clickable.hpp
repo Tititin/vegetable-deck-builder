@@ -18,7 +18,7 @@ public:
 
     virtual ~Clickable() = default;
     virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) = 0;
-    virtual void init();
+    virtual void init() = 0;
 
     virtual sf::Sprite& getSprite() { return _sprite; }
     virtual sf::FloatRect getGlobalBounds() const { return _sprite.getGlobalBounds(); }
