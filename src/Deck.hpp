@@ -11,28 +11,26 @@
 
 class Deck : public Clickable {
     private:
-        std::map<Card::VegetableType, int> _cardCounts;
-        std::vector<Card*> _drawnCards;
+        std::vector<Card*> _cards; // Cards currently in the deck
 
         InputManager* _inputManager;
         TextureManager* _textureManager;
 
         // SFML Attributes
         sf::Texture*    _deckTexture;
-        sf::Font        _deckFont;
-        sf::Text        _deckCountText; // For v0.4.0 only: display number of cards left by type
-
-        // Callbacks
-        // ClickCallback   _onClick;
-        // ClickCallback   _onClickRelease;
+        sf::Font        _deckFont; // For develop versions only
+        sf::Text        _deckCountText; // For develop versions only: display number of cards left by type
 
     public:
         Deck(InputManager& inputManager, TextureManager& textureManager);
         ~Deck();
 
-        Card* drawCard();
+        void init();
 
-        const std::vector<Card*>& getDrawnCards() const { return _drawnCards; }
+        void    addCard(Card* card);
+        Card*   drawRandomCard();
+
+        const std::vector<Card*>& getCards() const { return _cards; }
 
         // Callbacks
         void setOnClick(ClickCallback callback);
