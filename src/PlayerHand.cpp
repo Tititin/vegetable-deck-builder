@@ -18,6 +18,7 @@ void PlayerHand::init()
         slot.setColor(sf::Color(255, 255, 255, 64)); // Slightly transparent
         _slots.push_back(slot);
     }
+    _state = PlayerHandState::WAITINGCARDS;
 }
 
 void PlayerHand::draw(sf::RenderTarget &target)

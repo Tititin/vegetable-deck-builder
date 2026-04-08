@@ -34,6 +34,10 @@ public:
     void init();
 
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
+    void retrieveStates();
 
     void display(sf::RenderTarget& target);
+
+private:
+    void retrievePlayerHandState();
 };

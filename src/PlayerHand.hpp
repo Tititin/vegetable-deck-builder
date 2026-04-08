@@ -10,17 +10,28 @@
 #include "lib/Params.hpp"
 
 class PlayerHand {
+    public:
+        enum class PlayerHandState {
+            IDLE,
+            WAITINGCARDS
+        };
+
     private:
         std::vector<Card*> _cards; // Cards currently in the player's hand
         std::vector<sf::Sprite> _slots;
 
         InputManager* _inputManager;
         TextureManager* _textureManager;
+        PlayerHandState _state;
+
     public:
         PlayerHand(InputManager& inputManager, TextureManager& textureManager);
         ~PlayerHand();
 
         void init();
+
+        void setState(PlayerHandState state) { _state = state; }
+        PlayerHandState getState() const { return _state; }
 
         void draw(sf::RenderTarget& target);
 };

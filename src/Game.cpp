@@ -36,6 +36,11 @@ void Game::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
     _inputManager.handleEvent(event, window);
 }
 
+void Game::retrieveStates()
+{
+    retrievePlayerHandState();
+}
+
 void Game::display(sf::RenderTarget &target)
 {
     target.clear();
@@ -43,4 +48,16 @@ void Game::display(sf::RenderTarget &target)
     _deck.draw(target);
     _deck.drawContent(target);
     _playerHand.draw(target);
+}
+
+void Game::retrievePlayerHandState()
+{
+    switch(_playerHand.getState())
+    {
+        case PlayerHand::PlayerHandState::IDLE:
+            break;
+        case PlayerHand::PlayerHandState::WAITINGCARDS:
+            break;
+    }
+    // _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
 }
