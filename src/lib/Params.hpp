@@ -1,0 +1,6 @@
+#pragma once
+
+# define NB_CARDS_ARTICHOKE 10
+# define NB_CARDS_PER_TYPE 6
+# define CARD_SPRITE_SCALE 0.309f
+# define PLAYER_HAND_SPRITE_SCALE 0.247f

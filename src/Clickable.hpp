@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <functional>
+#include "lib/Params.hpp"
 
 class Clickable {
 public:

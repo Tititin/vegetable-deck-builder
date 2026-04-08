@@ -9,7 +9,7 @@ Deck::Deck(InputManager& inputManager, TextureManager& textureManager)
     _deckCountText(_deckFont)
 {
     _sprite.setPosition({50.f, 800.f});
-    _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
+    _sprite.setScale({CARD_SPRITE_SCALE, CARD_SPRITE_SCALE}); // Scale to fit the window
     setOnClick([this](Clickable&){
             this->setClickState(ClickState::PRESSED);
             Card* drawnCard = drawRandomCard();

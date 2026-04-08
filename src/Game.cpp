@@ -3,7 +3,8 @@
 Game::Game()
     :   _potager(_textureManager.getTexture("potager_slot")),
         _deck(_inputManager, _textureManager),
-        _cardManager(_textureManager)
+        _cardManager(_textureManager),
+        _playerHand(_inputManager, _textureManager)
 {
 }
 
@@ -16,6 +17,7 @@ void Game::init()
     _cardManager.init();
     _inputManager.registerClickable(&_deck);
     _potager.loadSlots();
+    _playerHand.init();
 
     for (int i = 0; i < 5; i++) {
         Card* newCard = _cardManager.createCard();
@@ -40,4 +42,5 @@ void Game::display(sf::RenderTarget &target)
     _potager.draw(target);
     _deck.draw(target);
     _deck.drawContent(target);
+    _playerHand.draw(target);
 }

@@ -17,7 +17,7 @@ private:
     Potager         _potager;
     Deck            _deck;
     // Garbage         _garbage;
-    // PlayerHand      _playerHand;
+    PlayerHand      _playerHand;
 
 public:
     Game();
@@ -29,7 +29,7 @@ public:
     Potager& getPotager() { return _potager; }
     Deck& getDeck() { return _deck; }
     // Garbage& getGarbage() { return _garbage; }
-    // PlayerHand& getPlayerHand() { return _playerHand; }
+    PlayerHand& getPlayerHand() { return _playerHand; }
 
     void init();
 
