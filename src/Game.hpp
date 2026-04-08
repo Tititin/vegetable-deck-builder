@@ -40,4 +40,5 @@ public:
 
 private:
     void retrievePlayerHandState();
+    void retrieveDeckState();
 };

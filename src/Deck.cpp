@@ -12,10 +12,7 @@ Deck::Deck(InputManager& inputManager, TextureManager& textureManager)
     _sprite.setScale({CARD_SPRITE_SCALE, CARD_SPRITE_SCALE}); // Scale to fit the window
     setOnClick([this](Clickable&){
             this->setClickState(ClickState::PRESSED);
-            Card* drawnCard = drawRandomCard();
-            if (drawnCard) {
-                drawnCard->setPosition({850.f, 800.f});
-            }
+            this->setState(DeckState::PICKINGCARDS);
     });
     setOnClickRelease([this](Clickable&){
             this->setClickState(ClickState::NONE);

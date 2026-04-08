@@ -28,17 +28,20 @@ void Game::init()
     for (int i = 0; i < 10; i++) {
         Card* newCard = _cardManager.createCard(Card::VegetableType::ARTICHOKE);
         _deck.addCard(newCard);
+        _inputManager.registerClickable(newCard);
     }
 }
 
 void Game::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
 {
     _inputManager.handleEvent(event, window);
+    retrieveStates();
 }
 
 void Game::retrieveStates()
 {
     retrievePlayerHandState();
+    retrieveDeckState();
 }
 
 void Game::display(sf::RenderTarget &target)
@@ -60,4 +63,26 @@ void Game::retrievePlayerHandState()
             break;
     }
     // _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
+}
+
+void Game::retrieveDeckState()
+{
+    switch(_deck.getState())
+    {
+        case Deck::DeckState::IDLE:
+            break;
+        case Deck::DeckState::PICKINGCARDS:
+            if (_playerHand.getState() == PlayerHand::PlayerHandState::WAITINGCARDS) {
+                for (int i = 0; i < 5; i++) {
+                    Card* drawnCard = _deck.drawRandomCard();
+                    if (drawnCard) {
+                        _playerHand.addCard(drawnCard);
+                        drawnCard->setPosition(_playerHand.getSlotPosition(i));
+                    }
+                }
+                _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
+            }
+            _deck.setState(Deck::DeckState::IDLE);
+            break;
+    }
 }

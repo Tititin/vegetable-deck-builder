@@ -21,6 +21,12 @@ void PlayerHand::init()
     _state = PlayerHandState::WAITINGCARDS;
 }
 
+void PlayerHand::addCard(Card *card)
+{
+    _cards.push_back(std::move(card));
+    _cards.back()->getSprite().setScale({PLAYER_HAND_SPRITE_SCALE, PLAYER_HAND_SPRITE_SCALE});
+}
+
 void PlayerHand::draw(sf::RenderTarget &target)
 {
     for (const auto& slot : _slots) {

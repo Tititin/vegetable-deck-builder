@@ -30,8 +30,11 @@ class PlayerHand {
 
         void init();
 
+        void addCard(Card* card);
+
         void setState(PlayerHandState state) { _state = state; }
         PlayerHandState getState() const { return _state; }
+        const sf::Vector2f  getSlotPosition(int index) const { return _slots[index].getPosition(); }
 
         void draw(sf::RenderTarget& target);
 };
