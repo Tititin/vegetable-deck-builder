@@ -19,7 +19,7 @@ void Potager::loadSlots()
     sf::Sprite slot(*_slotTexture);
     for (int i = 0; i < 5; i++) {
         slot.setPosition({ static_cast<float>(350 + i * 250), 400.f });
-        slot.setScale({0.309f, 0.309f});
+        slot.setScale({CARD_SPRITE_SCALE, CARD_SPRITE_SCALE});
         slot.setColor(sf::Color(255, 255, 255, 64)); // Slightly transparent
         _slots.push_back(slot);
     }

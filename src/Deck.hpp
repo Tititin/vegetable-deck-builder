@@ -10,11 +10,17 @@
 #include "lib/Random.hpp"
 
 class Deck : public Clickable {
+    public:
+        enum class DeckState {
+            IDLE,
+            PICKINGCARDS
+        };
     private:
         std::vector<Card*> _cards; // Cards currently in the deck
 
         InputManager* _inputManager;
         TextureManager* _textureManager;
+        DeckState _state;
 
         // SFML Attributes
         sf::Texture*    _deckTexture;
@@ -39,6 +45,8 @@ class Deck : public Clickable {
         // Event Handling
         void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
         void click();
+        DeckState getState() const { return _state; }
+        void setState(DeckState state) { _state = state; }
 
         // Display
         void draw(sf::RenderTarget& target) const { target.draw(_sprite); }

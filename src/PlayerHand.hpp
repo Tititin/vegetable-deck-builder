@@ -7,7 +7,34 @@
 #include "Card.hpp"
 #include "TextureManager.hpp"
 #include "InputManager.hpp"
+#include "lib/Params.hpp"
 
-class PlayerHand : public Clickable {
+class PlayerHand {
+    public:
+        enum class PlayerHandState {
+            IDLE,
+            WAITINGCARDS
+        };
 
+    private:
+        std::vector<Card*> _cards; // Cards currently in the player's hand
+        std::vector<sf::Sprite> _slots;
+
+        InputManager* _inputManager;
+        TextureManager* _textureManager;
+        PlayerHandState _state;
+
+    public:
+        PlayerHand(InputManager& inputManager, TextureManager& textureManager);
+        ~PlayerHand();
+
+        void init();
+
+        void addCard(Card* card);
+
+        void setState(PlayerHandState state) { _state = state; }
+        PlayerHandState getState() const { return _state; }
+        const sf::Vector2f  getSlotPosition(int index) const { return _slots[index].getPosition(); }
+
+        void draw(sf::RenderTarget& target);
 };

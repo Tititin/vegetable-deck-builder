@@ -3,7 +3,8 @@
 Game::Game()
     :   _potager(_textureManager.getTexture("potager_slot")),
         _deck(_inputManager, _textureManager),
-        _cardManager(_textureManager)
+        _cardManager(_textureManager),
+        _playerHand(_inputManager, _textureManager)
 {
 }
 
@@ -16,6 +17,7 @@ void Game::init()
     _cardManager.init();
     _inputManager.registerClickable(&_deck);
     _potager.loadSlots();
+    _playerHand.init();
 
     for (int i = 0; i < 5; i++) {
         Card* newCard = _cardManager.createCard();
@@ -26,12 +28,20 @@ void Game::init()
     for (int i = 0; i < 10; i++) {
         Card* newCard = _cardManager.createCard(Card::VegetableType::ARTICHOKE);
         _deck.addCard(newCard);
+        _inputManager.registerClickable(newCard);
     }
 }
 
 void Game::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
 {
     _inputManager.handleEvent(event, window);
+    retrieveStates();
+}
+
+void Game::retrieveStates()
+{
+    retrievePlayerHandState();
+    retrieveDeckState();
 }
 
 void Game::display(sf::RenderTarget &target)
@@ -40,4 +50,40 @@ void Game::display(sf::RenderTarget &target)
     _potager.draw(target);
     _deck.draw(target);
     _deck.drawContent(target);
+    _playerHand.draw(target);
+}
+
+void Game::retrievePlayerHandState()
+{
+    switch(_playerHand.getState())
+    {
+        case PlayerHand::PlayerHandState::IDLE:
+            break;
+        case PlayerHand::PlayerHandState::WAITINGCARDS:
+            break;
+    }
+    // _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
+}
+
+void Game::retrieveDeckState()
+{
+    switch(_deck.getState())
+    {
+        case Deck::DeckState::IDLE:
+            break;
+        case Deck::DeckState::PICKINGCARDS:
+            if (_playerHand.getState() == PlayerHand::PlayerHandState::WAITINGCARDS) {
+                for (int i = 0; i < 5; i++) {
+                    Card* drawnCard = _deck.drawRandomCard();
+                    if (drawnCard) {
+                        _playerHand.addCard(drawnCard);
+                        drawnCard->setPosition(_playerHand.getSlotPosition(i));
+                        drawnCard->updateScale(PLAYER_HAND_SPRITE_SCALE);
+                    }
+                }
+                _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
+            }
+            _deck.setState(Deck::DeckState::IDLE);
+            break;
+    }
 }

@@ -53,6 +53,9 @@ public:
     // Getters
     const VegetableType& getType() const { return _type; }
 
+    // Sprite and Position
+    void updateScale(const float& scale);
+
     // Callbacks
     void setOnClick(ClickCallback callback);
     void setOnClickRelease(ClickReleaseCallback callback);

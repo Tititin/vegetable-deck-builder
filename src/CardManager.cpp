@@ -12,18 +12,18 @@ CardManager::~CardManager()
 
 void CardManager::init()
 {
-    _remainingCardsToCreate[Card::VegetableType::ARTICHOKE] = 10;
-    _remainingCardsToCreate[Card::VegetableType::ONION] = 6;
-    _remainingCardsToCreate[Card::VegetableType::CORN] = 6;
-    _remainingCardsToCreate[Card::VegetableType::POTATO] = 6;
-    _remainingCardsToCreate[Card::VegetableType::EGGPLANT] = 6;
-    _remainingCardsToCreate[Card::VegetableType::PEAS] = 6;
-    _remainingCardsToCreate[Card::VegetableType::CARROT] = 6;
-    _remainingCardsToCreate[Card::VegetableType::BROCCOLI] = 6;
-    _remainingCardsToCreate[Card::VegetableType::LEEK] = 6;
-    _remainingCardsToCreate[Card::VegetableType::RHUBARB] = 6;
-    _remainingCardsToCreate[Card::VegetableType::BELLPEPPER] = 6;
-    _remainingCardsToCreate[Card::VegetableType::BEETROOT] = 6;
+    _remainingCardsToCreate[Card::VegetableType::ARTICHOKE] = NB_CARDS_ARTICHOKE;
+    _remainingCardsToCreate[Card::VegetableType::ONION] = NB_CARDS_PER_TYPE;
+    _remainingCardsToCreate[Card::VegetableType::CORN] = NB_CARDS_PER_TYPE;
+    _remainingCardsToCreate[Card::VegetableType::POTATO] = NB_CARDS_PER_TYPE;
+    _remainingCardsToCreate[Card::VegetableType::EGGPLANT] = NB_CARDS_PER_TYPE;
+    _remainingCardsToCreate[Card::VegetableType::PEAS] = NB_CARDS_PER_TYPE;
+    _remainingCardsToCreate[Card::VegetableType::CARROT] = NB_CARDS_PER_TYPE;
+    _remainingCardsToCreate[Card::VegetableType::BROCCOLI] = NB_CARDS_PER_TYPE;
+    _remainingCardsToCreate[Card::VegetableType::LEEK] = NB_CARDS_PER_TYPE;
+    _remainingCardsToCreate[Card::VegetableType::RHUBARB] = NB_CARDS_PER_TYPE;
+    _remainingCardsToCreate[Card::VegetableType::BELLPEPPER] = NB_CARDS_PER_TYPE;
+    _remainingCardsToCreate[Card::VegetableType::BEETROOT] = NB_CARDS_PER_TYPE;
 }
 
 Card *CardManager::createCard()

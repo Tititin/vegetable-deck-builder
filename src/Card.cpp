@@ -47,7 +47,7 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
             break;
     }
     _frontTexture = &textureManager.getTexture("card_" + _name);
-    _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
+    _sprite.setScale({CARD_SPRITE_SCALE, CARD_SPRITE_SCALE}); // Scale to fit the window
 
     _border.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y});
     _border.setOutlineColor(sf::Color::Yellow);
@@ -73,6 +73,12 @@ Card::~Card()
 
 void Card::init()
 {
+}
+
+void Card::updateScale(const float &scale)
+{    
+    _sprite.setScale({scale, scale});
+    _border.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y});
 }
 
 void Card::setOnClick(ClickCallback callback)
