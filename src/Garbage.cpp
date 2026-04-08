@@ -20,6 +20,8 @@ void Garbage::init()
 void Garbage::addCard(Card *card)
 {
     _cardsInGarbage.push_back(std::move(card));
+    card->setPosition(_sprite.getPosition());
+    card->getSprite().setScale({CARD_SPRITE_SCALE, CARD_SPRITE_SCALE});
 }
 
 void Garbage::setOnClick(ClickCallback callback)
@@ -36,4 +38,11 @@ void Garbage::handleEvent(const sf::Event &event, const sf::RenderWindow &window
 
 void Garbage::click()
 {
+}
+
+void Garbage::draw(sf::RenderTarget &target) const
+{
+    target.draw(_sprite);
+    if (!_cardsInGarbage.empty())
+        target.draw(_cardsInGarbage.back()->getSprite());
 }

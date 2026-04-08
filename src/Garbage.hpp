@@ -41,5 +41,5 @@ public:
     void setState(GarbageState state) { _state = state; }
 
     // Display
-    void draw(sf::RenderTarget& target) const { target.draw(_sprite); }
+    void draw(sf::RenderTarget& target) const;
 };

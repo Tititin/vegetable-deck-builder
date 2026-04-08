@@ -37,6 +37,11 @@ void Game::init()
 void Game::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
 {
     _inputManager.handleEvent(event, window);
+    // TEST: Pressing G key will move all cards from player hand to garbage
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G)) {
+        _playerHand.setState(PlayerHand::PlayerHandState::DISCARDINGCARDS);
+    }
+    // END TEST
     retrieveStates();
 }
 
@@ -64,6 +69,12 @@ void Game::retrievePlayerHandState()
         case PlayerHand::PlayerHandState::IDLE:
             break;
         case PlayerHand::PlayerHandState::WAITINGCARDS:
+            break;
+        case PlayerHand::PlayerHandState::DISCARDINGCARDS:
+            for (auto* card : _playerHand.getCards())
+                _garbage.addCard(std::move(card));
+            _playerHand.setState(PlayerHand::PlayerHandState::WAITINGCARDS);
+                break;
             break;
     }
     // _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
