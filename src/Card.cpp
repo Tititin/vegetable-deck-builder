@@ -75,6 +75,12 @@ void Card::init()
 {
 }
 
+void Card::updateScale(const float &scale)
+{    
+    _sprite.setScale({scale, scale});
+    _border.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y});
+}
+
 void Card::setOnClick(ClickCallback callback)
 {
     _onClick = std::move(callback);

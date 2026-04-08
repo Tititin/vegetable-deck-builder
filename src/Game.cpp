@@ -78,6 +78,7 @@ void Game::retrieveDeckState()
                     if (drawnCard) {
                         _playerHand.addCard(drawnCard);
                         drawnCard->setPosition(_playerHand.getSlotPosition(i));
+                        drawnCard->updateScale(PLAYER_HAND_SPRITE_SCALE);
                     }
                 }
                 _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
