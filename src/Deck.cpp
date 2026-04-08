@@ -67,6 +67,16 @@ void Deck::click()
 {
 }
 
+void Deck::draw(sf::RenderTarget &target)
+{
+    if (_cards.empty()) {
+        _sprite.setTexture(_textureManager->getTexture("potager_slot"));
+    }
+    else
+        _sprite.setTexture(*_deckTexture);
+    target.draw(_sprite);
+}
+
 void Deck::drawContent(sf::RenderTarget &target)
 {
     std::map<Card::VegetableType, int> cardCounts;

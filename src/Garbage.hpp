@@ -28,6 +28,7 @@ public:
     void init();
 
     void addCard(Card* card);
+    Card* drawCardFromGarbage();
     const std::vector<Card*>& getCardsInGarbage() const { return _cardsInGarbage; }
 
     // Callbacks

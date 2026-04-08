@@ -71,8 +71,10 @@ void Game::retrievePlayerHandState()
         case PlayerHand::PlayerHandState::WAITINGCARDS:
             break;
         case PlayerHand::PlayerHandState::DISCARDINGCARDS:
-            for (auto* card : _playerHand.getCards())
-                _garbage.addCard(std::move(card));
+            while (_playerHand.getCards().size() > 0) {
+                Card* card = _playerHand.discardCard();
+                _garbage.addCard(card);
+            }
             _playerHand.setState(PlayerHand::PlayerHandState::WAITINGCARDS);
                 break;
             break;
@@ -88,17 +90,32 @@ void Game::retrieveDeckState()
             break;
         case Deck::DeckState::PICKINGCARDS:
             if (_playerHand.getState() == PlayerHand::PlayerHandState::WAITINGCARDS) {
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; _playerHand.getCards().size() < 5; i++) {
                     Card* drawnCard = _deck.drawRandomCard();
                     if (drawnCard) {
                         _playerHand.addCard(drawnCard);
-                        drawnCard->setPosition(_playerHand.getSlotPosition(i));
+                        drawnCard->setPosition(_playerHand.getSlotPosition(_playerHand.getCards().size() - 1));
                         drawnCard->updateScale(PLAYER_HAND_SPRITE_SCALE);
                     }
+                    else
+                    {
+                        _deck.setState(Deck::DeckState::EMPTYDECK);
+                        break;
+                    }
                 }
-                _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
+                if (_playerHand.getCards().size() >= 5)
+                {
+                    _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
+                    _deck.setState(Deck::DeckState::IDLE);
+                }
             }
-            _deck.setState(Deck::DeckState::IDLE);
+            else if (_playerHand.getState() == PlayerHand::PlayerHandState::IDLE)
+                _deck.setState(Deck::DeckState::IDLE);
+            break;
+        case Deck::DeckState::EMPTYDECK:
+            for (auto* card : _garbage.getCardsInGarbage())
+                _deck.addCard(_garbage.drawCardFromGarbage());
+            _deck.setState(Deck::DeckState::PICKINGCARDS);
             break;
     }
 }

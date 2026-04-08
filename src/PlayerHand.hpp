@@ -32,6 +32,7 @@ class PlayerHand {
         void init();
 
         void addCard(Card* card);
+        Card* discardCard();
 
         void setState(PlayerHandState state) { _state = state; }
         PlayerHandState getState() const { return _state; }

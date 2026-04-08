@@ -24,6 +24,16 @@ void Garbage::addCard(Card *card)
     card->getSprite().setScale({CARD_SPRITE_SCALE, CARD_SPRITE_SCALE});
 }
 
+Card *Garbage::drawCardFromGarbage()
+{
+    if (!_cardsInGarbage.empty()) {
+        Card* card = _cardsInGarbage.back();
+        _cardsInGarbage.pop_back();
+        return card;
+    }
+    return nullptr;
+}
+
 void Garbage::setOnClick(ClickCallback callback)
 {
 }
