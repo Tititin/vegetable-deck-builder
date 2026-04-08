@@ -23,8 +23,18 @@ void PlayerHand::init()
 
 void PlayerHand::addCard(Card *card)
 {
-    _cards.push_back(std::move(card));
+    _cards.push_back(card);
     _cards.back()->getSprite().setScale({PLAYER_HAND_SPRITE_SCALE, PLAYER_HAND_SPRITE_SCALE});
+}
+
+Card *PlayerHand::discardCard()
+{
+    if (!_cards.empty()) {
+        Card* card = _cards.back();
+        _cards.pop_back();
+        return card;
+    }
+    return nullptr;
 }
 
 void PlayerHand::draw(sf::RenderTarget &target)

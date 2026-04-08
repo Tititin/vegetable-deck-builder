@@ -13,7 +13,8 @@ class Deck : public Clickable {
     public:
         enum class DeckState {
             IDLE,
-            PICKINGCARDS
+            PICKINGCARDS,
+            EMPTYDECK
         };
     private:
         std::vector<Card*> _cards; // Cards currently in the deck
@@ -49,6 +50,6 @@ class Deck : public Clickable {
         void setState(DeckState state) { _state = state; }
 
         // Display
-        void draw(sf::RenderTarget& target) const { target.draw(_sprite); }
+        void draw(sf::RenderTarget& target);
         void drawContent(sf::RenderTarget& target);
 };

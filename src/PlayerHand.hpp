@@ -13,7 +13,8 @@ class PlayerHand {
     public:
         enum class PlayerHandState {
             IDLE,
-            WAITINGCARDS
+            WAITINGCARDS,
+            DISCARDINGCARDS
         };
 
     private:
@@ -31,10 +32,12 @@ class PlayerHand {
         void init();
 
         void addCard(Card* card);
+        Card* discardCard();
 
         void setState(PlayerHandState state) { _state = state; }
         PlayerHandState getState() const { return _state; }
         const sf::Vector2f  getSlotPosition(int index) const { return _slots[index].getPosition(); }
+        const std::vector<Card*>& getCards() const { return _cards; }
 
         void draw(sf::RenderTarget& target);
 };
