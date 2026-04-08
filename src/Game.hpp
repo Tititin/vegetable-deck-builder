@@ -16,7 +16,7 @@ private:
     TextureManager  _textureManager;
     Potager         _potager;
     Deck            _deck;
-    // Garbage         _garbage;
+    Garbage         _garbage;
     PlayerHand      _playerHand;
 
 public:
@@ -28,7 +28,7 @@ public:
     TextureManager& getTextureManager() { return _textureManager; }
     Potager& getPotager() { return _potager; }
     Deck& getDeck() { return _deck; }
-    // Garbage& getGarbage() { return _garbage; }
+    Garbage& getGarbage() { return _garbage; }
     PlayerHand& getPlayerHand() { return _playerHand; }
 
     void init();
@@ -41,4 +41,5 @@ public:
 private:
     void retrievePlayerHandState();
     void retrieveDeckState();
+    void retrieveGarbageState();
 };

@@ -11,6 +11,12 @@ Garbage::~Garbage()
 {
 }
 
+void Garbage::init()
+{
+    _sprite.setPosition({ 1500.f, 800.f });
+    _sprite.setScale({CARD_SPRITE_SCALE, CARD_SPRITE_SCALE}); // Scale to fit the window
+}
+
 void Garbage::addCard(Card *card)
 {
     _cardsInGarbage.push_back(std::move(card));
