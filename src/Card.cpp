@@ -1,7 +1,7 @@
 #include "Card.hpp"
 
 Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
-    :   Clickable(textureManager.getTexture("card_back")),
+    :   SpriteClickable(textureManager.getTexture("card_back")),
         _backTexture(&textureManager.getTexture("card_back")),
         _type(type)
 {

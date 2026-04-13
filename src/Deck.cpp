@@ -1,7 +1,7 @@
 #include "Deck.hpp"
 
 Deck::Deck(InputManager& inputManager, TextureManager& textureManager)
-:   Clickable(textureManager.getTexture("card_back")),
+:   SpriteClickable(textureManager.getTexture("card_back")),
     _inputManager(&inputManager),
     _textureManager(&textureManager),
     _deckTexture(&textureManager.getTexture("card_back")),

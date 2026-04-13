@@ -3,13 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
-#include "Clickable.hpp"
+#include "SpriteClickable.hpp"
 #include "Card.hpp"
 #include "TextureManager.hpp"
 #include "InputManager.hpp"
 #include "lib/Random.hpp"
 
-class Deck : public Clickable {
+class Deck : public SpriteClickable {
     public:
         enum class DeckState {
             IDLE,
@@ -32,7 +32,7 @@ class Deck : public Clickable {
         Deck(InputManager& inputManager, TextureManager& textureManager);
         ~Deck();
 
-        void init();
+        virtual void init() override;
 
         void    addCard(Card* card);
         Card*   drawRandomCard();
@@ -44,8 +44,8 @@ class Deck : public Clickable {
         void setOnClickRelease(ClickReleaseCallback callback);
 
         // Event Handling
-        void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
-        void click();
+        virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
+        virtual void click() override;
         DeckState getState() const { return _state; }
         void setState(DeckState state) { _state = state; }
 

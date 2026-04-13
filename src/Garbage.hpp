@@ -3,12 +3,12 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
-#include "Clickable.hpp"
+#include "SpriteClickable.hpp"
 #include "Card.hpp"
 #include "TextureManager.hpp"
 #include "InputManager.hpp"
 
-class Garbage : public Clickable {
+class Garbage : public SpriteClickable {
     public:
         enum class GarbageState {
             IDLE,
@@ -25,7 +25,7 @@ public:
     Garbage(InputManager& inputManager, TextureManager& textureManager);
     ~Garbage();
 
-    void init();
+    virtual void init() override;
 
     void addCard(Card* card);
     Card* drawCardFromGarbage();
@@ -36,7 +36,7 @@ public:
     void setOnClickRelease(ClickReleaseCallback callback);
 
     // Event Handling
-    void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
+    virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
     void click();
     GarbageState getState() const { return _state; }
     void setState(GarbageState state) { _state = state; }

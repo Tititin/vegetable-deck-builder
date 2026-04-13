@@ -4,7 +4,7 @@
 Potager::Potager(const sf::Texture& slotTexture) 
     :   _slotTexture(const_cast<sf::Texture*>(&slotTexture))
 {
-    _elements = std::vector<Clickable*>(5);
+    _elements = std::vector<SpriteClickable*>(5);
 }
 
 Potager::~Potager() {
@@ -25,7 +25,7 @@ void Potager::loadSlots()
     }
 }
 
-void Potager::addCard(Clickable *card, const int &index)
+void Potager::addCard(SpriteClickable *card, const int &index)
 {
     _elements[index] = card;
 }
