@@ -8,7 +8,7 @@
 #include "PlayerHand.hpp"
 #include "Potager.hpp"
 #include "TextureManager.hpp"
-#include "ui/BasicButton.hpp"
+#include "ui/TextButton.hpp"
 
 class Game {
 private:
@@ -19,7 +19,7 @@ private:
     Deck            _deck;
     Garbage         _garbage;
     PlayerHand      _playerHand;
-    BasicButton     _endTurnButton;
+    TextButton     _endTurnButton;
 
 public:
     Game();

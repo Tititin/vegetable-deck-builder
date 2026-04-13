@@ -21,7 +21,8 @@ add_executable(game
     src/Garbage.cpp
     src/InputManager.cpp
     src/TextureManager.cpp
-    src/ui/BasicButton.cpp)
+    src/ui/BasicButton.cpp
+    src/ui/TextButton.cpp)
 
 add_custom_command(
     TARGET game POST_BUILD

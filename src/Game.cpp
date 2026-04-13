@@ -6,7 +6,7 @@ Game::Game()
         _cardManager(_textureManager),
         _playerHand(_inputManager, _textureManager),
         _garbage(_inputManager, _textureManager),
-        _endTurnButton()
+        _endTurnButton("End Turn")
 {
 }
 
