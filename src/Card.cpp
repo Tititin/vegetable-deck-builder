@@ -54,7 +54,7 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
     _border.setOutlineThickness(2.f);
     _border.setFillColor(sf::Color::Transparent);
     setOnClick([this](Clickable&){
-            click();
+        click();
     });
     setOnClickRelease([this](Clickable&){
         click();
