@@ -5,7 +5,8 @@ Game::Game()
         _deck(_inputManager, _textureManager),
         _cardManager(_textureManager),
         _playerHand(_inputManager, _textureManager),
-        _garbage(_inputManager, _textureManager)
+        _garbage(_inputManager, _textureManager),
+        _endTurnButton()
 {
 }
 
@@ -20,6 +21,7 @@ void Game::init()
     _potager.loadSlots();
     _playerHand.init();
     _garbage.init();
+    _endTurnButton.init();
 
     for (int i = 0; i < 5; i++) {
         Card* newCard = _cardManager.createCard();
@@ -60,6 +62,7 @@ void Game::display(sf::RenderTarget &target)
     _deck.drawContent(target);
     _playerHand.draw(target);
     _garbage.draw(target);
+    _endTurnButton.draw(target);
 }
 
 void Game::retrievePlayerHandState()
