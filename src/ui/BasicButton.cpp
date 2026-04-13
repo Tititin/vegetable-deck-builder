@@ -3,6 +3,22 @@
 BasicButton::BasicButton()
     : Clickable()
 {
+    setOnClick([this](Clickable&){
+        click();
+    });
+    setOnClickRelease([this](Clickable&){
+        click();
+    });
+}
+
+void BasicButton::setOnClick(ClickCallback callback)
+{
+    _onClick = std::move(callback);
+}
+
+void BasicButton::setOnClickRelease(ClickReleaseCallback callback)
+{
+    _onClickRelease = std::move(callback);
 }
 
 void BasicButton::init()

@@ -14,6 +14,9 @@ class BasicButton : public Clickable {
         BasicButton();
         ~BasicButton() = default;
 
+        void setOnClick(ClickCallback callback);
+        void setOnClickRelease(ClickReleaseCallback callback);
+
         virtual void init() override;
         virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
         virtual void click() override;
