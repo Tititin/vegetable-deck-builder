@@ -21,6 +21,7 @@ add_executable(game
     src/Garbage.cpp
     src/InputManager.cpp
     src/TextureManager.cpp
+    src/FontManager.cpp
     src/ui/BasicButton.cpp
     src/ui/TextButton.cpp)
 
