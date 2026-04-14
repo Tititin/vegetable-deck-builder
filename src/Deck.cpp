@@ -1,12 +1,12 @@
 #include "Deck.hpp"
 
-Deck::Deck(InputManager& inputManager, TextureManager& textureManager)
+Deck::Deck(InputManager& inputManager, TextureManager& textureManager, FontManager& fontManager)
 :   SpriteClickable(textureManager.getTexture("card_back")),
     _inputManager(&inputManager),
     _textureManager(&textureManager),
+    _fontManager(&fontManager),
     _deckTexture(&textureManager.getTexture("card_back")),
-    _deckFont("assets/fonts/CreatoDisplay-Regular.otf"),
-    _deckCountText(_deckFont)
+    _deckCountText(fontManager.getFont("CreatoDisplay-Regular"))
 {
     _sprite.setPosition({50.f, 800.f});
     _sprite.setScale({CARD_SPRITE_SCALE, CARD_SPRITE_SCALE}); // Scale to fit the window

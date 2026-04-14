@@ -1,9 +1,9 @@
 #include "TextButton.hpp"
 
-TextButton::TextButton(const std::string &text)
+TextButton::TextButton(const std::string &text, FontManager& fontManager)
     : BasicButton(),
-        _buttonFont("assets/fonts/CreatoDisplay-Regular.otf"),
-        _buttonText(_buttonFont)
+        _fontManager(&fontManager),
+        _buttonText(fontManager.getFont("CreatoDisplay-Regular"))
 {
     _buttonText.setString(text);
     _buttonText.setCharacterSize(BASIC_BUTTON_TEXT_SIZE);

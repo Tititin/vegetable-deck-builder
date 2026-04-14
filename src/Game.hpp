@@ -3,6 +3,7 @@
 #include "Card.hpp"
 #include "CardManager.hpp"
 #include "Deck.hpp"
+#include "FontManager.hpp"
 #include "Garbage.hpp"
 #include "InputManager.hpp"
 #include "PlayerHand.hpp"
@@ -12,14 +13,15 @@
 
 class Game {
 private:
-    CardManager     _cardManager;
     InputManager    _inputManager;
     TextureManager  _textureManager;
+    FontManager     _fontManager;
+    CardManager     _cardManager;
     Potager         _potager;
     Deck            _deck;
     Garbage         _garbage;
     PlayerHand      _playerHand;
-    TextButton     _endTurnButton;
+    TextButton      _endTurnButton;
 
 public:
     Game();
@@ -28,6 +30,7 @@ public:
     CardManager& getCardManager() { return _cardManager; }
     InputManager& getInputManager() { return _inputManager; }
     TextureManager& getTextureManager() { return _textureManager; }
+    FontManager& getFontManager() { return _fontManager; }
     Potager& getPotager() { return _potager; }
     Deck& getDeck() { return _deck; }
     Garbage& getGarbage() { return _garbage; }

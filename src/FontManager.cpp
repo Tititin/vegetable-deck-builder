@@ -9,20 +9,20 @@ FontManager::~FontManager()
 {
 }
 
-sf::Font &FontManager::getFont(const std::string &filePath)
-{
-    if (_fonts.find(filePath) == _fonts.end()) {
-        loadFont(filePath);
+sf::Font& FontManager::getFont(const std::string &key)
+{    
+    if (_fonts.find(key) == _fonts.end()) {
+        throw std::runtime_error("Font not found: " + key);
     }
-    return _fonts[filePath];
+    return _fonts[key];
 }
 
-bool FontManager::loadFont(const std::string &filePath)
+bool FontManager::loadFont(const std::string &filePath, const std::string &key)
 {
     sf::Font font;
     if (!font.openFromFile(filePath)) {
         return false;
     }
-    _fonts[filePath] = font;
+    _fonts[key] = font;
     return true;
 }

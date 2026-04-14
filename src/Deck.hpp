@@ -5,6 +5,7 @@
 #include <map>
 #include "SpriteClickable.hpp"
 #include "Card.hpp"
+#include "FontManager.hpp"
 #include "TextureManager.hpp"
 #include "InputManager.hpp"
 #include "lib/Random.hpp"
@@ -19,17 +20,18 @@ class Deck : public SpriteClickable {
     private:
         std::vector<Card*> _cards; // Cards currently in the deck
 
-        InputManager* _inputManager;
+        InputManager*   _inputManager;
         TextureManager* _textureManager;
+        FontManager*    _fontManager;
         DeckState _state;
 
         // SFML Attributes
         sf::Texture*    _deckTexture;
-        sf::Font        _deckFont; // For develop versions only
+        // sf::Font        _deckFont; // For develop versions only
         sf::Text        _deckCountText; // For develop versions only: display number of cards left by type
 
     public:
-        Deck(InputManager& inputManager, TextureManager& textureManager);
+        Deck(InputManager& inputManager, TextureManager& textureManager, FontManager& fontManager);
         ~Deck();
 
         virtual void init() override;

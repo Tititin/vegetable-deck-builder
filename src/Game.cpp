@@ -1,12 +1,15 @@
 #include "Game.hpp"
 
 Game::Game()
-    :   _potager(_textureManager.getTexture("potager_slot")),
-        _deck(_inputManager, _textureManager),
+    :   _fontManager(),
+        _textureManager(),
+        _inputManager(),
+        _potager(_textureManager.getTexture("potager_slot")),
+        _deck(_inputManager, _textureManager, _fontManager),
         _cardManager(_textureManager),
         _playerHand(_inputManager, _textureManager),
         _garbage(_inputManager, _textureManager),
-        _endTurnButton("End Turn")
+        _endTurnButton("End Turn", _fontManager)
 {
 }
 
