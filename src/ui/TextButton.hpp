@@ -6,7 +6,6 @@
 class TextButton : public BasicButton {
     protected:
         sf::Text _buttonText;
-        // sf::Font _buttonFont;
 
         FontManager*    _fontManager;
 

@@ -27,7 +27,6 @@ class Deck : public SpriteClickable {
 
         // SFML Attributes
         sf::Texture*    _deckTexture;
-        // sf::Font        _deckFont; // For develop versions only
         sf::Text        _deckCountText; // For develop versions only: display number of cards left by type
 
     public:
