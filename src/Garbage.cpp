@@ -1,7 +1,7 @@
 #include "Garbage.hpp"
 
 Garbage::Garbage(InputManager &inputManager, TextureManager &textureManager)
-: Clickable(textureManager.getTexture("potager_slot")),
+: SpriteClickable(textureManager.getTexture("potager_slot")),
   _inputManager(&inputManager),
   _textureManager(&textureManager)
 {
@@ -46,7 +46,7 @@ void Garbage::handleEvent(const sf::Event &event, const sf::RenderWindow &window
 {
 }
 
-void Garbage::click()
+void Garbage::click(MouseClickState clickState)
 {
 }
 

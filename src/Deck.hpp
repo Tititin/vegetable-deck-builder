@@ -3,13 +3,14 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
-#include "Clickable.hpp"
+#include "SpriteClickable.hpp"
 #include "Card.hpp"
+#include "FontManager.hpp"
 #include "TextureManager.hpp"
 #include "InputManager.hpp"
 #include "lib/Random.hpp"
 
-class Deck : public Clickable {
+class Deck : public SpriteClickable {
     public:
         enum class DeckState {
             IDLE,
@@ -19,17 +20,17 @@ class Deck : public Clickable {
     private:
         std::vector<Card*> _cards; // Cards currently in the deck
 
-        InputManager* _inputManager;
+        InputManager*   _inputManager;
         TextureManager* _textureManager;
-        DeckState _state;
+        FontManager*    _fontManager;
+        DeckState       _state;
 
         // SFML Attributes
         sf::Texture*    _deckTexture;
-        sf::Font        _deckFont; // For develop versions only
         sf::Text        _deckCountText; // For develop versions only: display number of cards left by type
 
     public:
-        Deck(InputManager& inputManager, TextureManager& textureManager);
+        Deck(InputManager& inputManager, TextureManager& textureManager, FontManager& fontManager);
         ~Deck();
 
         void init();
@@ -44,8 +45,8 @@ class Deck : public Clickable {
         void setOnClickRelease(ClickReleaseCallback callback);
 
         // Event Handling
-        void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
-        void click();
+        void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
+        void click(MouseClickState clickState);
         DeckState getState() const { return _state; }
         void setState(DeckState state) { _state = state; }
 

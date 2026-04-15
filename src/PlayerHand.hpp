@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
-#include "Clickable.hpp"
+#include "SpriteClickable.hpp"
 #include "Card.hpp"
 #include "TextureManager.hpp"
 #include "InputManager.hpp"

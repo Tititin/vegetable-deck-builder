@@ -1,11 +1,15 @@
 #include "Game.hpp"
 
 Game::Game()
-    :   _potager(_textureManager.getTexture("potager_slot")),
-        _deck(_inputManager, _textureManager),
+    :   _fontManager(),
+        _textureManager(),
+        _inputManager(),
+        _potager(_textureManager.getTexture("potager_slot")),
+        _deck(_inputManager, _textureManager, _fontManager),
         _cardManager(_textureManager),
         _playerHand(_inputManager, _textureManager),
-        _garbage(_inputManager, _textureManager)
+        _garbage(_inputManager, _textureManager),
+        _endTurnButton("End Turn", _fontManager)
 {
 }
 
@@ -20,6 +24,8 @@ void Game::init()
     _potager.loadSlots();
     _playerHand.init();
     _garbage.init();
+    _endTurnButton.init();
+    _inputManager.registerClickable(&_endTurnButton);
 
     for (int i = 0; i < 5; i++) {
         Card* newCard = _cardManager.createCard();
@@ -37,11 +43,6 @@ void Game::init()
 void Game::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
 {
     _inputManager.handleEvent(event, window);
-    // TEST: Pressing G key will move all cards from player hand to garbage
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::G)) {
-        _playerHand.setState(PlayerHand::PlayerHandState::DISCARDINGCARDS);
-    }
-    // END TEST
     retrieveStates();
 }
 
@@ -50,6 +51,7 @@ void Game::retrieveStates()
     retrievePlayerHandState();
     retrieveDeckState();
     retrieveGarbageState();
+    retrieveEndTurnButtonState();
 }
 
 void Game::display(sf::RenderTarget &target)
@@ -60,6 +62,7 @@ void Game::display(sf::RenderTarget &target)
     _deck.drawContent(target);
     _playerHand.draw(target);
     _garbage.draw(target);
+    _endTurnButton.draw(target);
 }
 
 void Game::retrievePlayerHandState()
@@ -79,7 +82,6 @@ void Game::retrievePlayerHandState()
                 break;
             break;
     }
-    // _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
 }
 
 void Game::retrieveDeckState()
@@ -127,6 +129,20 @@ void Game::retrieveGarbageState()
         case Garbage::GarbageState::IDLE:
             break;
         case Garbage::GarbageState::RESTORINGDECK:
+            break;
+    }
+}
+
+void Game::retrieveEndTurnButtonState()
+{
+    switch (_endTurnButton.getClickState())
+    {
+        case Clickable::ClickState::NONE:
+            break;
+        case Clickable::ClickState::PRESSED:
+            // For testing purposes, pressing the end turn button will move all cards from player hand to garbage
+            _playerHand.setState(PlayerHand::PlayerHandState::DISCARDINGCARDS);
+            _endTurnButton.setClickState(Clickable::ClickState::NONE);
             break;
     }
 }

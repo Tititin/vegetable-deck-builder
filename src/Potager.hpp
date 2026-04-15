@@ -2,11 +2,11 @@
 
 // #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Clickable.hpp"
+#include "SpriteClickable.hpp"
 
 class Potager {
 private:
-    std::vector<Clickable*> _elements;
+    std::vector<SpriteClickable*> _elements;
     std::vector<sf::Sprite> _slots;
 
     sf::Texture*            _slotTexture;
@@ -16,9 +16,9 @@ public:
 
     void    loadSlots();
 
-    void    addCard(Clickable* card, const int& index);
+    void    addCard(SpriteClickable* card, const int& index);
     
-    std::vector<Clickable*>& getElements() { return _elements; }
+    std::vector<SpriteClickable*>& getElements() { return _elements; }
 
     // SFML Methods
     void    draw(sf::RenderTarget& target) const;
