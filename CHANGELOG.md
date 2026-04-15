@@ -144,3 +144,80 @@
 ---
 
 **Status:** Advanced input system with double-click capabilities and dynamic card instantiation. Foundation laid for complex user interactions and procedural gameplay elements, with robust event management ensuring smooth user experience.
+
+## v0.5.0: Game Orchestration, Player Hand & UI System
+
+### New Features
+- **Game Orchestrator** — Central Game class managing all game logic:
+  - Unified initialization and update cycle for all game systems
+  - Centralized access to InputManager, TextureManager, and CardManager
+  - Main event loop coordination and rendering pipeline
+
+- **Card Manager System** — Dedicated system for card creation and inventory:
+  - Per-vegetable-type inventory tracking with configurable quantities
+  - Dynamic card instantiation based on type requests
+  - Separation of card creation logic from gameplay systems
+  - Support for all 12 vegetable types with proper initialization counts
+
+- **Player Hand System** — Hand management for drawn cards:
+  - Initial draw of 5 random cards from the deck
+  - Hand display and positioning on screen
+  - Selected card indicator with visual border
+  - Foundation for card placement mechanics
+
+- **Garbage System** — Card discard and recycling mechanics:
+  - Dedicated zone for discarded cards
+  - State machine for garbage lifecycle management
+  - Recycling mechanism to return discarded cards to deck
+  - Complex card routing (Potager → Garbage → Deck)
+
+- **UI Button System** — Complete button framework for game interface:
+  - **BasicButton** — Base button class with sprite rendering and click callbacks
+  - **TextButton** — Text-rendered buttons with customizable labels and styling
+  - Configurable visual states and interaction handling
+  - Integration with InputManager for seamless event delegation
+
+- **Font Manager** — Centralized font resource management:
+  - Font caching and loading system
+  - Support for multiple font assets
+  - Consistent text rendering across all UI elements
+
+- **End Turn Button** — Game flow control mechanism:
+  - Player action to discard hand into garbage zone
+  - Transition management between game states
+  - Visual feedback for button interactions
+
+### Architecture Improvements
+- **Clickable Interface Overhaul** — Enhanced interaction model:
+  - Separation of concerns: Clickable (interface) vs SpriteClickable (implementation)
+  - Better abstraction for non-sprite-based clickable elements
+  - Improved click/release state discrimination in callbacks
+
+- **State Machine Framework** — Foundation for complex game logic:
+  - State tracking and transitions
+  - Support for multi-phase gameplay systems (garbage zone cycling)
+
+- **Resource Management Enhancement** — Improved asset distribution:
+  - Macro-based sprite scaling for consistent sizing
+  - Centralized manager pattern for all resource types
+  - Better lifecycle management for complex systems
+
+### Technical Improvements
+- **Event Handling Refinement** — More granular click state management:
+  - Distinct handling of press vs. release events in callbacks
+  - Better click targeting and state disambiguation
+  - Improved handling of overlapping interactive elements
+
+- **Code Organization** — Systematic refactoring:
+  - Removal of deprecated code and old constructors
+  - Consistent indentation and style standards
+  - Reduced code duplication through shared patterns
+
+### Bug Fixes
+- Proper sprite centering for UI elements
+- Correct text rendering positioning in TextButton
+- Fixed border sizing for player hand cards
+
+---
+
+**Status:** Full game framework with core systems (card management, player hand, discard mechanics) established. Game orchestrator provides centralized control, and UI button system enables player interaction. Ready for gameplay pattern implementation and card placement mechanics in next release.
