@@ -47,4 +47,5 @@ private:
     void retrievePlayerHandState();
     void retrieveDeckState();
     void retrieveGarbageState();
+    void retrieveEndTurnButtonState();
 };
