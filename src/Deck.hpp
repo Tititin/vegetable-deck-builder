@@ -23,7 +23,7 @@ class Deck : public SpriteClickable {
         InputManager*   _inputManager;
         TextureManager* _textureManager;
         FontManager*    _fontManager;
-        DeckState _state;
+        DeckState       _state;
 
         // SFML Attributes
         sf::Texture*    _deckTexture;
