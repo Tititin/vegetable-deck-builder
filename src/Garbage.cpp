@@ -46,7 +46,7 @@ void Garbage::handleEvent(const sf::Event &event, const sf::RenderWindow &window
 {
 }
 
-void Garbage::click()
+void Garbage::click(MouseClickState clickState)
 {
 }
 

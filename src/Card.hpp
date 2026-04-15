@@ -65,7 +65,7 @@ public:
     virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
     void flipCard();
     void setClickState(ClickState state);
-    virtual void click() override;
+    virtual void click(MouseClickState clickState) override;
 
     // Display
     void showFront();

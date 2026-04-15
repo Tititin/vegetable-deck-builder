@@ -37,7 +37,7 @@ public:
 
     // Event Handling
     virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
-    void click();
+    virtual void click(MouseClickState clickState) override;
     GarbageState getState() const { return _state; }
     void setState(GarbageState state) { _state = state; }
 

@@ -54,10 +54,10 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
     _border.setOutlineThickness(2.f);
     _border.setFillColor(sf::Color::Transparent);
     setOnClick([this](Clickable&){
-        click();
+        click(MouseClickState::PRESSED);
     });
     setOnClickRelease([this](Clickable&){
-        click();
+        click(MouseClickState::RELEASED);
     });
     setOnDoubleClick([this](Clickable&){
         flipCard();
@@ -131,13 +131,21 @@ void Card::setClickState(ClickState state)
     _clickState = state;
 }
 
-void Card::click()
+void Card::click(MouseClickState clickState)
 {
-    if (this->getClickState() == ClickState::NONE)
+    if (clickState == MouseClickState::PRESSED)
     {
-        this->setClickState(ClickState::PRESSED);
-        _isClicked = true;
-        _border.setPosition(_sprite.getPosition());
+        if (this->getClickState() == ClickState::NONE)
+        {
+            this->setClickState(ClickState::PRESSED);
+            _isClicked = true;
+            _border.setPosition(_sprite.getPosition());
+        }
+        else
+        {
+            this->setClickState(ClickState::NONE);
+            _isClicked = false;
+        }
     }
     else
     {

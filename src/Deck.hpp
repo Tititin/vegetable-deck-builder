@@ -33,7 +33,7 @@ class Deck : public SpriteClickable {
         Deck(InputManager& inputManager, TextureManager& textureManager, FontManager& fontManager);
         ~Deck();
 
-        virtual void init() override;
+        void init();
 
         void    addCard(Card* card);
         Card*   drawRandomCard();
@@ -45,8 +45,8 @@ class Deck : public SpriteClickable {
         void setOnClickRelease(ClickReleaseCallback callback);
 
         // Event Handling
-        virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
-        virtual void click() override;
+        void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
+        void click(MouseClickState clickState);
         DeckState getState() const { return _state; }
         void setState(DeckState state) { _state = state; }
 

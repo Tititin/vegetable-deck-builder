@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <functional>
 #include "lib/Params.hpp"
+#include "lib/Enums.hpp"
 
 class Clickable {
 public:
@@ -15,18 +16,11 @@ public:
         PRESSED
     };
 
-    // Clickable(const sf::Texture& texture) : _sprite(texture) {}
     Clickable() {};
 
     virtual ~Clickable() = default;
     virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) = 0;
     virtual void init() = 0;
-
-    // virtual sf::Sprite& getSprite() { return _sprite; }
-    // virtual sf::FloatRect getGlobalBounds() const { return _sprite.getGlobalBounds(); }
-    // virtual sf::Vector2f getPosition() const { return _sprite.getPosition(); }
-    // virtual void setPosition(const sf::Vector2f& position) { _sprite.setPosition(position); }
-    // virtual sf::RectangleShape& getBorder() { return _border; }
 
     virtual ClickState getClickState() const { return _clickState; }
     virtual void setClickState(ClickState state) { _clickState = state; }
@@ -37,15 +31,12 @@ public:
     virtual bool isClicked() const { return _isClicked; }
     virtual bool contains(const sf::Vector2f& point) = 0;
 
-    virtual void click() = 0;
+    virtual void click(MouseClickState clickState) = 0;
 
 protected:
     ClickCallback _onClick;
     ClickCallback _onClickRelease;
     ClickCallback _onDoubleClick;
-
-    // sf::Sprite      _sprite;
-    // sf::RectangleShape   _border;
 
     bool            _isClicked = false;
 

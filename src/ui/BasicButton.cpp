@@ -4,10 +4,10 @@ BasicButton::BasicButton()
     : Clickable()
 {
     setOnClick([this](Clickable&){
-        click();
+        click(MouseClickState::PRESSED);
     });
     setOnClickRelease([this](Clickable&){
-        click();
+        click(MouseClickState::RELEASED);
     });
 }
 
@@ -32,6 +32,10 @@ void BasicButton::handleEvent(const sf::Event &event, const sf::RenderWindow &wi
 {
 }
 
-void BasicButton::click()
+void BasicButton::click(MouseClickState clickState)
 {
+    if (clickState == MouseClickState::PRESSED)
+        setClickState(ClickState::PRESSED);
+    else
+        setClickState(ClickState::NONE);
 }

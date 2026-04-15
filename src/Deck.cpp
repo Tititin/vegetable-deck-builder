@@ -63,7 +63,7 @@ void Deck::handleEvent(const sf::Event &event, const sf::RenderWindow &window)
 {
 }
 
-void Deck::click()
+void Deck::click(MouseClickState clickState)
 {
 }
 
