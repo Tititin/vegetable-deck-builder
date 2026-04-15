@@ -6,10 +6,10 @@
 #include <string>
 #include <optional>
 #include <functional>
-#include "Clickable.hpp"
+#include "SpriteClickable.hpp"
 #include "TextureManager.hpp"
 
-class Card : public Clickable
+class Card : public SpriteClickable
 {
 public:
     enum class VegetableType {
@@ -48,16 +48,24 @@ public:
     Card(const Card::VegetableType& type, TextureManager& textureManager);
     ~Card();
 
+    virtual void init() override;
+
+    // Getters
+    const VegetableType& getType() const { return _type; }
+
+    // Sprite and Position
+    void updateScale(const float& scale);
+
     // Callbacks
     void setOnClick(ClickCallback callback);
     void setOnClickRelease(ClickReleaseCallback callback);
     void setOnDoubleClick(ClickCallback callback);
 
     // Event Handling
-    void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
+    virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
     void flipCard();
     void setClickState(ClickState state);
-    void click();
+    virtual void click(MouseClickState clickState) override;
 
     // Display
     void showFront();

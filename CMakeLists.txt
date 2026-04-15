@@ -13,10 +13,17 @@ find_package(SFML CONFIG REQUIRED COMPONENTS Graphics Window System)
 add_executable(game 
     src/main.cpp
     src/Card.cpp
+    src/CardManager.cpp
     src/Deck.cpp
+    src/Game.cpp
     src/Potager.cpp
+    src/PlayerHand.cpp
+    src/Garbage.cpp
     src/InputManager.cpp
-    src/TextureManager.cpp)
+    src/TextureManager.cpp
+    src/FontManager.cpp
+    src/ui/BasicButton.cpp
+    src/ui/TextButton.cpp)
 
 add_custom_command(
     TARGET game POST_BUILD

@@ -1,0 +1,14 @@
+#pragma once
+
+# define NB_CARDS_ARTICHOKE 10
+# define NB_CARDS_PER_TYPE 6
+# define CARD_SPRITE_SCALE 0.309f
+# define PLAYER_HAND_SPRITE_SCALE 0.247f
+
+# define BASIC_BUTTON_WIDTH 200.f
+# define BASIC_BUTTON_HEIGHT 50.f
+# define BASIC_BUTTON_COLOR sf::Color{140, 140, 140, 255}
+# define BASIC_BUTTON_HOVER_COLOR sf::Color{170, 170, 170, 255}
+# define BASIC_BUTTON_CLICK_COLOR sf::Color{100, 100, 100, 255}
+# define BASIC_BUTTON_TEXT_COLOR sf::Color::White
+# define BASIC_BUTTON_TEXT_SIZE 24
