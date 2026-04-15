@@ -3,46 +3,54 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <map>
-#include "Clickable.hpp"
+#include "SpriteClickable.hpp"
 #include "Card.hpp"
+#include "FontManager.hpp"
 #include "TextureManager.hpp"
 #include "InputManager.hpp"
 #include "lib/Random.hpp"
 
-class Deck : public Clickable {
+class Deck : public SpriteClickable {
+    public:
+        enum class DeckState {
+            IDLE,
+            PICKINGCARDS,
+            EMPTYDECK
+        };
     private:
-        std::map<Card::VegetableType, int> _cardCounts;
-        std::vector<Card*> _drawnCards;
+        std::vector<Card*> _cards; // Cards currently in the deck
 
-        InputManager* _inputManager;
+        InputManager*   _inputManager;
         TextureManager* _textureManager;
+        FontManager*    _fontManager;
+        DeckState       _state;
 
         // SFML Attributes
         sf::Texture*    _deckTexture;
-        sf::Font        _deckFont;
-        sf::Text        _deckCountText; // For v0.4.0 only: display number of cards left by type
-
-        // Callbacks
-        // ClickCallback   _onClick;
-        // ClickCallback   _onClickRelease;
+        sf::Text        _deckCountText; // For develop versions only: display number of cards left by type
 
     public:
-        Deck(InputManager& inputManager, TextureManager& textureManager);
+        Deck(InputManager& inputManager, TextureManager& textureManager, FontManager& fontManager);
         ~Deck();
 
-        Card* drawCard();
+        void init();
 
-        const std::vector<Card*>& getDrawnCards() const { return _drawnCards; }
+        void    addCard(Card* card);
+        Card*   drawRandomCard();
+
+        const std::vector<Card*>& getCards() const { return _cards; }
 
         // Callbacks
         void setOnClick(ClickCallback callback);
         void setOnClickRelease(ClickReleaseCallback callback);
 
         // Event Handling
-        void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
-        void click();
+        void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
+        void click(MouseClickState clickState);
+        DeckState getState() const { return _state; }
+        void setState(DeckState state) { _state = state; }
 
         // Display
-        void draw(sf::RenderTarget& target) const { target.draw(_sprite); }
+        void draw(sf::RenderTarget& target);
         void drawContent(sf::RenderTarget& target);
 };

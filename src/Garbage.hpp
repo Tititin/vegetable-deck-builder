@@ -1,0 +1,46 @@
+#pragma once
+
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <map>
+#include "SpriteClickable.hpp"
+#include "Card.hpp"
+#include "TextureManager.hpp"
+#include "InputManager.hpp"
+
+class Garbage : public SpriteClickable {
+    public:
+        enum class GarbageState {
+            IDLE,
+            RESTORINGDECK
+        };
+private:
+    std::vector<Card*> _cardsInGarbage;
+
+    InputManager*   _inputManager;
+    TextureManager* _textureManager;
+    GarbageState    _state;
+
+public:
+    Garbage(InputManager& inputManager, TextureManager& textureManager);
+    ~Garbage();
+
+    virtual void init() override;
+
+    void addCard(Card* card);
+    Card* drawCardFromGarbage();
+    const std::vector<Card*>& getCardsInGarbage() const { return _cardsInGarbage; }
+
+    // Callbacks
+    void setOnClick(ClickCallback callback);
+    void setOnClickRelease(ClickReleaseCallback callback);
+
+    // Event Handling
+    virtual void handleEvent(const sf::Event& event, const sf::RenderWindow& window) override;
+    virtual void click(MouseClickState clickState) override;
+    GarbageState getState() const { return _state; }
+    void setState(GarbageState state) { _state = state; }
+
+    // Display
+    void draw(sf::RenderTarget& target) const;
+};

@@ -1,7 +1,7 @@
 #include "Card.hpp"
 
 Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
-    :   Clickable(textureManager.getTexture("card_back")),
+    :   SpriteClickable(textureManager.getTexture("card_back")),
         _backTexture(&textureManager.getTexture("card_back")),
         _type(type)
 {
@@ -47,17 +47,17 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
             break;
     }
     _frontTexture = &textureManager.getTexture("card_" + _name);
-    _sprite.setScale({0.309f, 0.309f}); // Scale to fit the window
+    _sprite.setScale({CARD_SPRITE_SCALE, CARD_SPRITE_SCALE}); // Scale to fit the window
 
     _border.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y});
     _border.setOutlineColor(sf::Color::Yellow);
     _border.setOutlineThickness(2.f);
     _border.setFillColor(sf::Color::Transparent);
     setOnClick([this](Clickable&){
-            click();
+        click(MouseClickState::PRESSED);
     });
     setOnClickRelease([this](Clickable&){
-        click();
+        click(MouseClickState::RELEASED);
     });
     setOnDoubleClick([this](Clickable&){
         flipCard();
@@ -69,6 +69,16 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
 
 Card::~Card()
 {
+}
+
+void Card::init()
+{
+}
+
+void Card::updateScale(const float &scale)
+{    
+    _sprite.setScale({scale, scale});
+    _border.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y});
 }
 
 void Card::setOnClick(ClickCallback callback)
@@ -121,13 +131,21 @@ void Card::setClickState(ClickState state)
     _clickState = state;
 }
 
-void Card::click()
+void Card::click(MouseClickState clickState)
 {
-    if (this->getClickState() == ClickState::NONE)
+    if (clickState == MouseClickState::PRESSED)
     {
-        this->setClickState(ClickState::PRESSED);
-        _isClicked = true;
-        _border.setPosition(_sprite.getPosition());
+        if (this->getClickState() == ClickState::NONE)
+        {
+            this->setClickState(ClickState::PRESSED);
+            _isClicked = true;
+            _border.setPosition(_sprite.getPosition());
+        }
+        else
+        {
+            this->setClickState(ClickState::NONE);
+            _isClicked = false;
+        }
     }
     else
     {
