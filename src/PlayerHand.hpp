@@ -14,6 +14,7 @@ class PlayerHand {
         enum class PlayerHandState {
             IDLE,
             WAITINGCARDS,
+            CHOOSECARD,
             DISCARDINGCARDS
         };
 
