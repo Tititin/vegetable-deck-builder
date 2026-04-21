@@ -9,7 +9,8 @@ Game::Game()
         _cardManager(_textureManager),
         _playerHand(_inputManager, _textureManager),
         _garbage(_inputManager, _textureManager),
-        _endTurnButton("End Turn", _fontManager)
+        _endTurnButton("End Turn", _fontManager),
+        _pickCardButton("Pick Card", _fontManager)
 {
 }
 
@@ -26,6 +27,8 @@ void Game::init()
     _garbage.init();
     _endTurnButton.init();
     _inputManager.registerClickable(&_endTurnButton);
+    _pickCardButton.init();
+    _inputManager.registerClickable(&_pickCardButton);
 
     for (int i = 0; i < 5; i++) {
         Card* newCard = _cardManager.createCard();
@@ -143,6 +146,17 @@ void Game::retrieveEndTurnButtonState()
             // For testing purposes, pressing the end turn button will move all cards from player hand to garbage
             _playerHand.setState(PlayerHand::PlayerHandState::DISCARDINGCARDS);
             _endTurnButton.setClickState(Clickable::ClickState::NONE);
+            break;
+    }
+}
+
+void Game::retrievePickCardButtonState()
+{
+    switch (_pickCardButton.getClickState())
+    {
+        case Clickable::ClickState::NONE:
+            break;
+        case Clickable::ClickState::PRESSED:
             break;
     }
 }
