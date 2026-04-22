@@ -16,3 +16,9 @@ void TextButton::init()
     _buttonText.setOrigin({_buttonText.getLocalBounds().size.x / 2.f, _buttonText.getLocalBounds().size.y / 2.f});
     _buttonText.setPosition({_buttonShape.getPosition().x + BASIC_BUTTON_WIDTH / 2.f, _buttonShape.getPosition().y + BASIC_BUTTON_HEIGHT / 2.f});
 }
+
+void TextButton::setPosition(const sf::Vector2f &position)
+{
+    BasicButton::setPosition(position);
+    _buttonText.setPosition({_buttonShape.getPosition().x + BASIC_BUTTON_WIDTH / 2.f, _buttonShape.getPosition().y + BASIC_BUTTON_HEIGHT / 2.f});
+}
