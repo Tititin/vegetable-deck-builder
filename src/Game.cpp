@@ -10,7 +10,8 @@ Game::Game()
         _playerHand(_inputManager, _textureManager),
         _garbage(_inputManager, _textureManager),
         _endTurnButton("End Turn", _fontManager),
-        _pickCardButton("Pick Card", _fontManager)
+        _pickCardButton("Pick Card", _fontManager),
+        _winGameButton("Win Game", _fontManager)
 {
 }
 
@@ -26,11 +27,18 @@ void Game::init(sf::RenderWindow* window)
     _potager.loadSlots();
     _playerHand.init();
     _garbage.init();
+
     _endTurnButton.init();
     _inputManager.registerClickable(&_endTurnButton);
+
     _pickCardButton.init();
     _pickCardButton.setPosition({ 1700.f, 75.f });
     _inputManager.registerClickable(&_pickCardButton);
+
+    _winGameButton.init();
+    _winGameButton.setPosition({ 1700.f, 130.f });
+    _winGameButton.setFillColor(sf::Color(0, 200, 0)); // Make the win game button green to distinguish it from the end turn button
+    _inputManager.registerClickable(&_winGameButton);
 
     for (int i = 0; i < 5; i++) {
         Card* newCard = _cardManager.createCard();
@@ -59,6 +67,7 @@ void Game::retrieveStates()
     retrievePotagerState();
     retrieveEndTurnButtonState();
     retrievePickCardButtonState();
+    retrieveWinGameButtonState();
 }
 
 void Game::display(sf::RenderTarget &target)
@@ -71,6 +80,7 @@ void Game::display(sf::RenderTarget &target)
     _garbage.draw(target);
     _endTurnButton.draw(target);
     _pickCardButton.draw(target);
+    _winGameButton.draw(target);
 }
 
 void Game::retrievePlayerHandState()
@@ -208,6 +218,19 @@ void Game::retrievePickCardButtonState()
                     }
                 }
                 _pickCardButton.setClickState(Clickable::ClickState::NONE);
+            break;
+    }
+}
+
+void Game::retrieveWinGameButtonState()
+{
+    switch (_winGameButton.getClickState())
+    {
+        case Clickable::ClickState::NONE:
+            break;
+        case Clickable::ClickState::PRESSED:
+            _window->close(); // Close the window to simulate winning the game
+            _winGameButton.setClickState(Clickable::ClickState::NONE);
             break;
     }
 }

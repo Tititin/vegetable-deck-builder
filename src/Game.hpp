@@ -13,6 +13,11 @@
 
 class Game {
 private:
+    enum class GameState {
+        PLAY,
+        GAMEOVER
+    };
+
     InputManager    _inputManager;
     TextureManager  _textureManager;
     FontManager     _fontManager;
@@ -23,8 +28,11 @@ private:
     PlayerHand      _playerHand;
     TextButton      _endTurnButton;
     TextButton      _pickCardButton;
+    TextButton      _winGameButton;
 
     sf::RenderWindow*   _window;
+
+    GameState _state;
 
 public:
     Game();
@@ -53,4 +61,5 @@ private:
     void retrievePotagerState();
     void retrieveEndTurnButtonState();
     void retrievePickCardButtonState();
+    void retrieveWinGameButtonState();
 };
