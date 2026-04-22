@@ -8,7 +8,7 @@ int main()
 
     Game game;
 
-    game.init();
+    game.init(&window);
 
     window.setKeyRepeatEnabled(false); // Disable key repeat to prevent multiple draws from the deck when holding space
     window.setMouseCursorVisible(false); // Hide the default mouse cursor

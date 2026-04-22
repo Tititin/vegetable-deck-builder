@@ -24,6 +24,8 @@ private:
     TextButton      _endTurnButton;
     TextButton      _pickCardButton;
 
+    sf::RenderWindow*   _window;
+
 public:
     Game();
     ~Game();
@@ -37,7 +39,7 @@ public:
     Garbage& getGarbage() { return _garbage; }
     PlayerHand& getPlayerHand() { return _playerHand; }
 
-    void init();
+    void init(sf::RenderWindow* window);
 
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
     void retrieveStates();
@@ -48,6 +50,7 @@ private:
     void retrievePlayerHandState();
     void retrieveDeckState();
     void retrieveGarbageState();
+    void retrievePotagerState();
     void retrieveEndTurnButtonState();
     void retrievePickCardButtonState();
 };

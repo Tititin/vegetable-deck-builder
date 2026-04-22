@@ -18,8 +18,9 @@ Game::~Game()
 {
 }
 
-void Game::init()
+void Game::init(sf::RenderWindow* window)
 {
+    _window = window;
     _cardManager.init();
     _inputManager.registerClickable(&_deck);
     _potager.loadSlots();
@@ -55,6 +56,7 @@ void Game::retrieveStates()
     retrievePlayerHandState();
     retrieveDeckState();
     retrieveGarbageState();
+    retrievePotagerState();
     retrieveEndTurnButtonState();
     retrievePickCardButtonState();
 }
@@ -139,6 +141,32 @@ void Game::retrieveGarbageState()
     }
 }
 
+void Game::retrievePotagerState()
+{
+    switch (_potager.getState())
+    {
+        case Potager::PotagerState::IDLE:
+            break;
+        case Potager::PotagerState::WAITINGCOMPLETION:
+            for (int i = 0; i < _potager.getElements().size(); i++)
+            {
+                if (_potager.getElements()[i] == nullptr)
+                {
+                    Card* newCard = _cardManager.createCard();
+                    if (!newCard) {
+                        _window->close(); // Close the window if no more cards can be created (should not happen in normal gameplay)
+                        break;
+                    }
+                    _potager.addCard(newCard, i);
+                    _inputManager.registerClickable(newCard);
+                    newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
+                }
+            }
+            _potager.setState(Potager::PotagerState::IDLE);
+            break;
+    }
+}
+
 void Game::retrieveEndTurnButtonState()
 {
     switch (_endTurnButton.getClickState())
@@ -149,6 +177,7 @@ void Game::retrieveEndTurnButtonState()
             // For testing purposes, pressing the end turn button will move all cards from player hand to garbage
             _playerHand.setState(PlayerHand::PlayerHandState::DISCARDINGCARDS);
             _endTurnButton.setClickState(Clickable::ClickState::NONE);
+            _potager.setState(Potager::PotagerState::WAITINGCOMPLETION);
             break;
     }
 }
