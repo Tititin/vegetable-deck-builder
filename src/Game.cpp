@@ -96,6 +96,12 @@ void Game::retrievePlayerHandState()
             break;
         case PlayerHand::PlayerHandState::WAITINGCARDS:
             break;
+        case PlayerHand::PlayerHandState::CHOOSECARD:
+            break;
+        case PlayerHand::PlayerHandState::NOARTICHOKE:
+            _winGameButton.setEnabled(true); // Enable the win game button if the player has no artichoke in hand
+            _state = GameState::GAMEOVER; // Set the game state to game over
+            break;
         case PlayerHand::PlayerHandState::DISCARDINGCARDS:
             while (_playerHand.getCards().size() > 0) {
                 Card* card = _playerHand.discardCard();
@@ -131,6 +137,7 @@ void Game::retrieveDeckState()
                 if (_playerHand.getCards().size() >= 5)
                 {
                     _playerHand.setState(PlayerHand::PlayerHandState::CHOOSECARD);
+                    _playerHand.runHandAnalysis(); // Check if the player has an artichoke in hand after drawing cards
                     _deck.setState(Deck::DeckState::IDLE);
                 }
             }
