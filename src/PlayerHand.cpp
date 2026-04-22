@@ -11,7 +11,7 @@ PlayerHand::~PlayerHand()
 
 void PlayerHand::init()
 {
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
         sf::Sprite slot(_textureManager->getTexture("potager_slot"));
         slot.setPosition({ static_cast<float>(350 + i * 200), 850.f });
         slot.setScale({PLAYER_HAND_SPRITE_SCALE, PLAYER_HAND_SPRITE_SCALE});
@@ -35,6 +35,16 @@ Card *PlayerHand::discardCard()
         return card;
     }
     return nullptr;
+}
+
+void PlayerHand::runHandAnalysis()
+{
+    for (int i = 0; i < _cards.size(); i++) {
+        if (_cards[i]->getType() == Card::VegetableType::ARTICHOKE) {
+            return; // If the player has at least one artichoke, return without doing anything
+        }
+    }
+    _state = PlayerHandState::NOARTICHOKE; // If the player has no artichoke, set the state to NOARTICHOKE
 }
 
 void PlayerHand::draw(sf::RenderTarget &target)

@@ -1,6 +1,15 @@
 #include "lib/Random.hpp"
 #include "CardManager.hpp"
 
+int CardManager::getRemainingCardsNumber()
+{
+    int total = 0;
+    for (const auto &pair : _remainingCardsToCreate) {
+        total += pair.second;
+    }
+    return total;
+}
+
 CardManager::CardManager(TextureManager &textureManager)
     : _textureManager(&textureManager)
 {
@@ -34,9 +43,11 @@ Card *CardManager::createCard()
     do
     {
         type = static_cast<Card::VegetableType>(distribution(Random::engine()));
-    } while (_remainingCardsToCreate[type] == 0);
+    } while (_remainingCardsToCreate[type] == 0 && getRemainingCardsNumber() > 0);
     _remainingCardsToCreate[type] -= 1;
 
+    if (getRemainingCardsNumber() == 0)
+        return nullptr;
     return new Card(type, *_textureManager);
 }
 

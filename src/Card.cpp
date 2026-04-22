@@ -60,7 +60,6 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
         click(MouseClickState::RELEASED);
     });
     setOnDoubleClick([this](Clickable&){
-        flipCard();
         this->setClickState(ClickState::NONE);
         _isClicked = false;
     });

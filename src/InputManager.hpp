@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Clickable.hpp"
+#include "Card.hpp"
 
 class InputManager {
     private:
@@ -13,4 +13,5 @@ class InputManager {
     public:
         void registerClickable(Clickable* clickable);
         void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
+        void releaseAllClickables();
 };
