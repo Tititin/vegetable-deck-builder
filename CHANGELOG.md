@@ -221,3 +221,91 @@
 ---
 
 **Status:** Full game framework with core systems (card management, player hand, discard mechanics) established. Game orchestrator provides centralized control, and UI button system enables player interaction. Ready for gameplay pattern implementation and card placement mechanics in next release.
+
+## v0.6.0: Card Picking from Potager & Win Condition
+
+### New Features
+- **Sixth Hand Slot** — Player hand now supports 6 cards:
+  - Extended from 5 to 6 slots for the picked card from Potager
+  - New slot positioned at index 5 (rightmost position)
+  - Proper scaling and positioning for all 6 slots
+
+- **Pick Card Button** — New UI button to pick a card from the Potager:
+  - TextButton positioned below "End Turn" button
+  - Enabled only during `CHOOSECARD` state
+  - Transfers selected Potager card to player's hand
+  - Removes card from Potager slot (sets to `nullptr`)
+
+- **Potager Completion System** — Automatic refill of Potager at end of turn:
+  - New `PotagerState::WAITINGCOMPLETION` state for refill trigger
+  - Creates new cards via CardManager for each empty slot
+  - Registers new cards with InputManager for interactivity
+  - Repositions cards to their original slot coordinates
+
+- **Card Generation Blocking** — Prevents card creation when inventory empty:
+  - `CardManager::createCard()` returns `nullptr` when no cards remain
+  - Graceful handling of empty card pool in Potager completion
+  - Game can continue with partially filled Potager
+
+- **Deck Reconstruction from Garbage** — Shuffle mechanism during card picking:
+  - When deck is empty during `PICKINGCARDS`, transitions to `EMPTYDECK` state
+  - Transfers all cards from Garbage back to Deck
+  - Resumes picking operation with replenished deck
+  - Enables continuous gameplay without manual deck reset
+
+- **Win Condition** — Victory triggered by hand composition:
+  - Analyzes player's hand after drawing 5 cards from deck
+  - Victory when **no Artichoke cards** are present in hand
+  - New `PlayerHandState::NOARTICHOKE` state for win detection
+  - Triggers game over sequence upon victory
+
+- **Win Game Button** — UI element for game termination:
+  - Green-colored TextButton to distinguish from other buttons
+  - Initially disabled, enabled only when win condition is met
+  - Click closes the application window
+  - Positioned below Pick Card button
+
+### Architecture Updates
+- **Game State Machine Expansion** — New states for game flow:
+  - `PlayerHandState::CHOOSECARD` — Phase where player picks from Potager
+  - `PlayerHandState::NOARTICHOKE` — Victory state detected
+  - `PotagerState::WAITINGCOMPLETION` — Pending Potager refill
+  - `GameState::GAMEOVER` — Terminal state for won game
+
+- **Hand Analysis System** — New method for win condition checking:
+  - `PlayerHand::runHandAnalysis()` scans all cards in hand
+  - Checks for presence of `VegetableType::ARTICHOKE`
+  - Sets appropriate state based on analysis result
+
+- **Window Reference in Game** — Pointer for application control:
+  - `sf::RenderWindow* _window` member in Game class
+  - Enables window closure on win condition
+  - Passed during `init()` method
+
+- **Button Enable/Disable System** — Dynamic button visibility:
+  - `BasicButton::setEnabled(bool)` controls button activation
+  - `BasicButton::isEnabled()` queries current state
+  - Only enabled buttons are rendered and respond to clicks
+
+### UI Improvements
+- **Button Positioning** — Organized button layout:
+  - End Turn: (1700, 20)
+  - Pick Card: (1700, 75)
+  - Win Game: (1700, 130)
+- **Visual Distinction** — Color coding for Win button (green)
+- **Conditional Rendering** — Buttons only drawn when enabled
+
+### Bug Fixes
+- **Click State Detection** — Fixed card selection detection:
+  - Changed from `_isClicked` to `getClickState() == PRESSED`
+  - Resolves issue where selected card loses state before Pick Card processing
+- **Dynamic Cast Safety** — Proper null checking with `dynamic_cast<Card*>`
+- **Empty Slot Handling** — Proper `nullptr` management in Potager elements
+
+### Known Issues
+- **Single Card Pick Limit** — Player can only pick one card per turn from Potager (by design)
+- **Partial Potager Fill** — If CardManager is empty, some Potager slots remain empty (acceptable for gameplay)
+
+---
+
+**Status:** Core deck-builder loop complete with Potager picking, deck recycling, and win condition. Players can now build their deck by picking vegetables from the Potager, with victory achieved by eliminating all Artichokes from their hand.
