@@ -22,6 +22,7 @@ private:
     Garbage         _garbage;
     PlayerHand      _playerHand;
     TextButton      _endTurnButton;
+    TextButton      _pickCardButton;
 
 public:
     Game();
@@ -48,4 +49,5 @@ private:
     void retrieveDeckState();
     void retrieveGarbageState();
     void retrieveEndTurnButtonState();
+    void retrievePickCardButtonState();
 };

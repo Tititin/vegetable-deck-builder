@@ -108,8 +108,14 @@ void Deck::drawContent(sf::RenderTarget &target)
             case Card::VegetableType::CARROT:
                 typeName = "Carrot";
                 break;
+            case Card::VegetableType::BROCCOLI:
+                typeName = "Broccoli";
+                break;
             case Card::VegetableType::LEEK:
                 typeName = "Leek";
+                break;
+            case Card::VegetableType::RHUBARB:
+                typeName = "Rhubarb";
                 break;
             case Card::VegetableType::BELLPEPPER:
                 typeName = "Bellpepper";

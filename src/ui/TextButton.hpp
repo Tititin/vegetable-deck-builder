@@ -15,5 +15,10 @@ class TextButton : public BasicButton {
 
         virtual void init() override;
 
+        virtual void setPosition(const sf::Vector2f& position) override;
+
+        void setText(const std::string& text) { _buttonText.setString(text); }
+        void setTextColor(const sf::Color& color) { _buttonText.setFillColor(color); }
+
         void draw(sf::RenderTarget& target) const { target.draw(_buttonShape); target.draw(_buttonText); }
 };

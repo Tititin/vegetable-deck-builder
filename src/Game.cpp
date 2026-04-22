@@ -9,7 +9,8 @@ Game::Game()
         _cardManager(_textureManager),
         _playerHand(_inputManager, _textureManager),
         _garbage(_inputManager, _textureManager),
-        _endTurnButton("End Turn", _fontManager)
+        _endTurnButton("End Turn", _fontManager),
+        _pickCardButton("Pick Card", _fontManager)
 {
 }
 
@@ -26,6 +27,9 @@ void Game::init()
     _garbage.init();
     _endTurnButton.init();
     _inputManager.registerClickable(&_endTurnButton);
+    _pickCardButton.init();
+    _pickCardButton.setPosition({ 1700.f, 75.f });
+    _inputManager.registerClickable(&_pickCardButton);
 
     for (int i = 0; i < 5; i++) {
         Card* newCard = _cardManager.createCard();
@@ -52,6 +56,7 @@ void Game::retrieveStates()
     retrieveDeckState();
     retrieveGarbageState();
     retrieveEndTurnButtonState();
+    retrievePickCardButtonState();
 }
 
 void Game::display(sf::RenderTarget &target)
@@ -63,6 +68,7 @@ void Game::display(sf::RenderTarget &target)
     _playerHand.draw(target);
     _garbage.draw(target);
     _endTurnButton.draw(target);
+    _pickCardButton.draw(target);
 }
 
 void Game::retrievePlayerHandState()
@@ -107,7 +113,7 @@ void Game::retrieveDeckState()
                 }
                 if (_playerHand.getCards().size() >= 5)
                 {
-                    _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
+                    _playerHand.setState(PlayerHand::PlayerHandState::CHOOSECARD);
                     _deck.setState(Deck::DeckState::IDLE);
                 }
             }
@@ -143,6 +149,36 @@ void Game::retrieveEndTurnButtonState()
             // For testing purposes, pressing the end turn button will move all cards from player hand to garbage
             _playerHand.setState(PlayerHand::PlayerHandState::DISCARDINGCARDS);
             _endTurnButton.setClickState(Clickable::ClickState::NONE);
+            break;
+    }
+}
+
+void Game::retrievePickCardButtonState()
+{
+    switch (_pickCardButton.getClickState())
+    {
+        case Clickable::ClickState::NONE:
+            break;
+        case Clickable::ClickState::PRESSED:
+            if (_playerHand.getState() == PlayerHand::PlayerHandState::CHOOSECARD)
+                {
+                    for (int i = 0; i < _potager.getElements().size(); i++)
+                    {
+                        if (_potager.getElements()[i] && _potager.getElements()[i]->getClickState() == Clickable::ClickState::PRESSED)
+                        {
+                            Card* card = dynamic_cast<Card*>(_potager.getElements()[i]);
+                            if (card) {
+                                _playerHand.addCard(card);
+                                card->setPosition(_playerHand.getSlotPosition(_playerHand.getCards().size() - 1));
+                                card->updateScale(PLAYER_HAND_SPRITE_SCALE);
+                                _potager.getElements()[i] = nullptr;
+                                _inputManager.releaseAllClickables(); // Release all clickables to reset their states
+                                _playerHand.setState(PlayerHand::PlayerHandState::IDLE);
+                            }
+                        }
+                    }
+                }
+                _pickCardButton.setClickState(Clickable::ClickState::NONE);
             break;
     }
 }
