@@ -38,6 +38,7 @@ void Game::init(sf::RenderWindow* window)
     _winGameButton.init();
     _winGameButton.setPosition({ 1700.f, 130.f });
     _winGameButton.setFillColor(sf::Color(0, 200, 0)); // Make the win game button green to distinguish it from the end turn button
+    _winGameButton.setEnabled(false); // Disable the win game button at the start of the game
     _inputManager.registerClickable(&_winGameButton);
 
     for (int i = 0; i < 5; i++) {
@@ -78,9 +79,13 @@ void Game::display(sf::RenderTarget &target)
     _deck.drawContent(target);
     _playerHand.draw(target);
     _garbage.draw(target);
-    _endTurnButton.draw(target);
-    _pickCardButton.draw(target);
-    _winGameButton.draw(target);
+
+    if (_endTurnButton.isEnabled())
+        _endTurnButton.draw(target);
+    if (_pickCardButton.isEnabled())
+        _pickCardButton.draw(target);
+    if (_winGameButton.isEnabled())
+        _winGameButton.draw(target);
 }
 
 void Game::retrievePlayerHandState()
@@ -90,6 +95,12 @@ void Game::retrievePlayerHandState()
         case PlayerHand::PlayerHandState::IDLE:
             break;
         case PlayerHand::PlayerHandState::WAITINGCARDS:
+            break;
+        case PlayerHand::PlayerHandState::CHOOSECARD:
+            break;
+        case PlayerHand::PlayerHandState::NOARTICHOKE:
+            _winGameButton.setEnabled(true); // Enable the win game button if the player has no artichoke in hand
+            _state = GameState::GAMEOVER; // Set the game state to game over
             break;
         case PlayerHand::PlayerHandState::DISCARDINGCARDS:
             while (_playerHand.getCards().size() > 0) {
@@ -126,6 +137,7 @@ void Game::retrieveDeckState()
                 if (_playerHand.getCards().size() >= 5)
                 {
                     _playerHand.setState(PlayerHand::PlayerHandState::CHOOSECARD);
+                    _playerHand.runHandAnalysis(); // Check if the player has an artichoke in hand after drawing cards
                     _deck.setState(Deck::DeckState::IDLE);
                 }
             }
@@ -229,8 +241,11 @@ void Game::retrieveWinGameButtonState()
         case Clickable::ClickState::NONE:
             break;
         case Clickable::ClickState::PRESSED:
-            _window->close(); // Close the window to simulate winning the game
-            _winGameButton.setClickState(Clickable::ClickState::NONE);
+            if (_winGameButton.isEnabled())
+            {
+                _window->close(); // Close the window to simulate winning the game
+                _winGameButton.setClickState(Clickable::ClickState::NONE);
+            }
             break;
     }
 }

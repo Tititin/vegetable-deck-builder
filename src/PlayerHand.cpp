@@ -37,6 +37,16 @@ Card *PlayerHand::discardCard()
     return nullptr;
 }
 
+void PlayerHand::runHandAnalysis()
+{
+    for (int i = 0; i < _cards.size(); i++) {
+        if (_cards[i]->getType() == Card::VegetableType::ARTICHOKE) {
+            return; // If the player has at least one artichoke, return without doing anything
+        }
+    }
+    _state = PlayerHandState::NOARTICHOKE; // If the player has no artichoke, set the state to NOARTICHOKE
+}
+
 void PlayerHand::draw(sf::RenderTarget &target)
 {
     for (const auto& slot : _slots) {

@@ -15,6 +15,7 @@ class PlayerHand {
             IDLE,
             WAITINGCARDS,
             CHOOSECARD,
+            NOARTICHOKE,
             DISCARDINGCARDS
         };
 
@@ -39,6 +40,8 @@ class PlayerHand {
         PlayerHandState getState() const { return _state; }
         const sf::Vector2f  getSlotPosition(int index) const { return _slots[index].getPosition(); }
         const std::vector<Card*>& getCards() const { return _cards; }
+
+        void runHandAnalysis();
 
         void draw(sf::RenderTarget& target);
 };
