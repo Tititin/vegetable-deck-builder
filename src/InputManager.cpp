@@ -1,5 +1,17 @@
 #include "InputManager.hpp"
 
+void InputManager::releaseAllClickables()
+{
+    for (auto* clickable : _clickables)
+    {
+        if (clickable->getClickState() == Clickable::ClickState::PRESSED)
+        {
+            if (clickable->getOnClickRelease())
+                clickable->getOnClickRelease()(*clickable);
+        }
+    }
+}
+
 void InputManager::registerClickable(Clickable *clickable)
 {
     _clickables.push_back(clickable);
@@ -27,11 +39,12 @@ void InputManager::handleEvent(const sf::Event &event, const sf::RenderWindow &w
                     {
                         clickable->getOnClick()(*clickable);
                     }
-                    
+
                     // Release other pressed clickables
                     for (auto* otherClickable : _clickables)
                     {
-                        if (otherClickable != clickable && otherClickable->getClickState() == Clickable::ClickState::PRESSED)
+                        if (otherClickable != clickable && otherClickable->getClickState() == Clickable::ClickState::PRESSED
+                            && (dynamic_cast<Card *>(clickable) && dynamic_cast<Card *>(otherClickable))) // Only release if both are Cards
                         {
                             if (otherClickable->getOnClickRelease())
                                 otherClickable->getOnClickRelease()(*otherClickable);

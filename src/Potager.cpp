@@ -36,8 +36,11 @@ void Potager::draw(sf::RenderTarget &target) const
         target.draw(slot);
     }
     for (const auto& element : _elements) {
-        target.draw(element->getSprite());
-        if (element->isClicked())
-            target.draw(element->getBorder());
+        if (element)
+        {
+            target.draw(element->getSprite());
+            if (element->isClicked())
+                target.draw(element->getBorder());
+        }
     }
 }

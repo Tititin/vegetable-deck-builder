@@ -13,6 +13,11 @@
 
 class Game {
 private:
+    enum class GameState {
+        PLAY,
+        GAMEOVER
+    };
+
     InputManager    _inputManager;
     TextureManager  _textureManager;
     FontManager     _fontManager;
@@ -22,6 +27,12 @@ private:
     Garbage         _garbage;
     PlayerHand      _playerHand;
     TextButton      _endTurnButton;
+    TextButton      _pickCardButton;
+    TextButton      _winGameButton;
+
+    sf::RenderWindow*   _window;
+
+    GameState _state;
 
 public:
     Game();
@@ -36,7 +47,7 @@ public:
     Garbage& getGarbage() { return _garbage; }
     PlayerHand& getPlayerHand() { return _playerHand; }
 
-    void init();
+    void init(sf::RenderWindow* window);
 
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window);
     void retrieveStates();
@@ -47,5 +58,8 @@ private:
     void retrievePlayerHandState();
     void retrieveDeckState();
     void retrieveGarbageState();
+    void retrievePotagerState();
     void retrieveEndTurnButtonState();
+    void retrievePickCardButtonState();
+    void retrieveWinGameButtonState();
 };

@@ -12,6 +12,9 @@ protected:
 
     TextureManager* _textureManager;
 
+private:
+    int getRemainingCardsNumber();
+
 public:
     CardManager(TextureManager& textureManager);
     ~CardManager();
