@@ -19,6 +19,7 @@ add_executable(game
     src/Potager.cpp
     src/PlayerHand.cpp
     src/Garbage.cpp
+    src/Compost.cpp
     src/InputManager.cpp
     src/TextureManager.cpp
     src/FontManager.cpp

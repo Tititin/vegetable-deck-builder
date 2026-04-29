@@ -2,6 +2,7 @@
 
 #include "Card.hpp"
 #include "CardManager.hpp"
+#include "Compost.hpp"
 #include "Deck.hpp"
 #include "FontManager.hpp"
 #include "Garbage.hpp"
