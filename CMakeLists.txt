@@ -24,7 +24,8 @@ add_executable(game
     src/TextureManager.cpp
     src/FontManager.cpp
     src/ui/BasicButton.cpp
-    src/ui/TextButton.cpp)
+    src/ui/TextButton.cpp
+    src/ui/TextBox.cpp)
 
 add_custom_command(
     TARGET game POST_BUILD
