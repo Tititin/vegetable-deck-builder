@@ -7,6 +7,7 @@
 #include <optional>
 #include <functional>
 #include "SpriteClickable.hpp"
+#include "ui/TextBox.hpp"
 #include "TextureManager.hpp"
 
 class Card : public SpriteClickable
@@ -37,6 +38,7 @@ private:
     // SFML Attributes
     sf::Texture*    _backTexture;
     sf::Texture*    _frontTexture;
+    sf::Font*       _ruleFont;
 
 
     // Game Attributes
@@ -44,8 +46,11 @@ private:
     Face            _currentFace = Face::BACK;
     VegetableType   _type;
 
+    // UI Attributes
+    TextBox         _ruleTextBox;
+
 public:
-    Card(const Card::VegetableType& type, TextureManager& textureManager);
+    Card(const Card::VegetableType& type, TextureManager& textureManager, sf::Font& ruleFont);
     ~Card();
 
     virtual void init() override;

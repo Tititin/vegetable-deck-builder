@@ -10,8 +10,9 @@ int CardManager::getRemainingCardsNumber()
     return total;
 }
 
-CardManager::CardManager(TextureManager &textureManager)
-    : _textureManager(&textureManager)
+CardManager::CardManager(TextureManager &textureManager, FontManager &fontManager)
+    :   _textureManager(&textureManager),
+        _fontManager(&fontManager)
 {
 }
 
@@ -48,14 +49,14 @@ Card *CardManager::createCard()
 
     if (getRemainingCardsNumber() == 0)
         return nullptr;
-    return new Card(type, *_textureManager);
+    return new Card(type, *_textureManager, _fontManager->getFont("CreatoDisplay-Regular"));
 }
 
 Card *CardManager::createCard(const Card::VegetableType &type)
 {
     if (_remainingCardsToCreate[type] > 0) {
         _remainingCardsToCreate[type] -= 1;
-        return new Card(type, *_textureManager);
+        return new Card(type, *_textureManager, _fontManager->getFont("CreatoDisplay-Regular"));
     }
     return nullptr;
 }

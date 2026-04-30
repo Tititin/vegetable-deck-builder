@@ -1,8 +1,10 @@
 #include "Card.hpp"
 
-Card::Card(const Card::VegetableType &type, TextureManager &textureManager)
+Card::Card(const Card::VegetableType &type, TextureManager &textureManager, sf::Font &ruleFont)
     :   SpriteClickable(textureManager.getTexture("card_back")),
         _backTexture(&textureManager.getTexture("card_back")),
+        _ruleFont(&ruleFont),
+        _ruleTextBox(*_ruleFont, "", 20),
         _type(type)
 {
     switch (type) {

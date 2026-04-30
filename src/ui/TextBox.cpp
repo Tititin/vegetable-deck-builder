@@ -1,7 +1,10 @@
 #include "TextBox.hpp"
 
 TextBox::TextBox(const sf::Font &font, const std::string &str, unsigned int characterSize)
+    : _text(font)
 {
+    _text.setString(str);
+    _text.setCharacterSize(characterSize);
 }
 
 void TextBox::setPosition(const sf::Vector2f &position)

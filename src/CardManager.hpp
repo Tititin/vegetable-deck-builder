@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include "SpriteClickable.hpp"
+#include "FontManager.hpp"
 #include "Card.hpp"
 
 class CardManager {
@@ -11,12 +12,13 @@ protected:
     std::map<Card::VegetableType, int> _remainingCardsToCreate; // Map to keep track of the number of each type of card in the deck
 
     TextureManager* _textureManager;
+    FontManager*    _fontManager;
 
 private:
     int getRemainingCardsNumber();
 
 public:
-    CardManager(TextureManager& textureManager);
+    CardManager(TextureManager& textureManager, FontManager& fontManager);
     ~CardManager();
 
     void init();
