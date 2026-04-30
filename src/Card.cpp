@@ -86,6 +86,7 @@ void Card::updateScale(const float &scale)
 {    
     _sprite.setScale({scale, scale});
     _border.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y});
+    _ruleTextBox.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y / 3.f});
 }
 
 void Card::setPosition(const sf::Vector2f &position)

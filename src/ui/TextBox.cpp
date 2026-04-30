@@ -15,6 +15,7 @@ TextBox::TextBox(const sf::Font &font, const std::string &str, unsigned int char
 void TextBox::setPosition(const sf::Vector2f &position)
 {
     _box.setPosition(position);
+    _text.setPosition({position.x + 5.f, position.y + 5.f}); // Add some padding for the text
 }
 
 void TextBox::setSize(const sf::Vector2f &size)
