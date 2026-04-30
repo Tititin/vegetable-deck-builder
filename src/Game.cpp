@@ -45,7 +45,7 @@ void Game::init(sf::RenderWindow* window)
         Card* newCard = _cardManager.createCard();
         _potager.addCard(newCard, i);
         _inputManager.registerClickable(newCard);
-        newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
+        newCard->setPosition({ static_cast<float>(300 + i * 260), 400.f });
     }
     for (int i = 0; i < 10; i++) {
         Card* newCard = _cardManager.createCard(Card::VegetableType::ARTICHOKE);
@@ -181,7 +181,7 @@ void Game::retrievePotagerState()
                     }
                     _potager.addCard(newCard, i);
                     _inputManager.registerClickable(newCard);
-                    newCard->setPosition({ static_cast<float>(350 + i * 250), 400.f });
+                    newCard->setPosition({ static_cast<float>(300 + i * 260), 400.f });
                 }
             }
             _potager.setState(Potager::PotagerState::IDLE);

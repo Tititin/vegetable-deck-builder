@@ -53,8 +53,6 @@ void PlayerHand::draw(sf::RenderTarget &target)
         target.draw(slot);
     }
     for (const auto& card : _cards) {
-        target.draw(card->getSprite());
-        if (card->isClicked())
-            target.draw(card->getBorder());
+        card->draw(target);
     }
 }
