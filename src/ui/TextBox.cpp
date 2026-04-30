@@ -5,11 +5,21 @@ TextBox::TextBox(const sf::Font &font, const std::string &str, unsigned int char
 {
     _text.setString(str);
     _text.setCharacterSize(characterSize);
+    _text.setFillColor(sf::Color::Black);
+
+    _box.setFillColor(sf::Color(255, 255, 255, 96)); // Semi-transparent white
+    _box.setOutlineColor(sf::Color::Black);
+    _box.setOutlineThickness(2.f);
 }
 
 void TextBox::setPosition(const sf::Vector2f &position)
 {
     _box.setPosition(position);
+}
+
+void TextBox::setSize(const sf::Vector2f &size)
+{
+    _box.setSize(size);
 }
 
 void TextBox::setString(const std::string &str)
@@ -42,8 +52,15 @@ void TextBox::setOutlineThickness(float thickness)
     _box.setOutlineThickness(thickness);
 }
 
+void TextBox::setVisible(bool visible)
+{
+    _isVisible = visible;
+}
+
 void TextBox::draw(sf::RenderTarget &target) const
 {
-    target.draw(_box);
-    target.draw(_text);
+    if (_isVisible) {
+        target.draw(_box);
+        target.draw(_text);
+    }
 }
