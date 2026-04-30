@@ -22,4 +22,6 @@ class SpriteClickable : public Clickable {
         virtual sf::RectangleShape& getBorder() { return _border; }
 
         virtual bool contains(const sf::Vector2f& point) override { return _sprite.getGlobalBounds().contains(point); };
+
+        virtual void draw(sf::RenderTarget& target) const { target.draw(_sprite); if (isClicked()) target.draw(_border); }
 };

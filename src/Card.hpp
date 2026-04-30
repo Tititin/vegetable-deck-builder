@@ -60,6 +60,7 @@ public:
 
     // Sprite and Position
     void updateScale(const float& scale);
+    void setPosition(const sf::Vector2f& position) override;
 
     // Callbacks
     void setOnClick(ClickCallback callback);
@@ -75,6 +76,7 @@ public:
     // Display
     void showFront();
     void showBack();
+    void draw(sf::RenderTarget& target) const override;
 };
 
 #endif // CARD_HPP_

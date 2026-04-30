@@ -4,7 +4,7 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager, sf::
     :   SpriteClickable(textureManager.getTexture("card_back")),
         _backTexture(&textureManager.getTexture("card_back")),
         _ruleFont(&ruleFont),
-        _ruleTextBox(*_ruleFont, "", 20),
+        _ruleTextBox(*_ruleFont, "<rule placeholder>", 20),
         _type(type)
 {
     switch (type) {
@@ -55,6 +55,12 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager, sf::
     _border.setOutlineColor(sf::Color::Yellow);
     _border.setOutlineThickness(2.f);
     _border.setFillColor(sf::Color::Transparent);
+
+    _ruleTextBox.setString("Rule for " + _name); // Placeholder rule text, to be replaced with actual rules
+    _ruleTextBox.setVisible(true); // Set to true for testing, can be set to false if you want to hide the rule text box by default
+    _ruleTextBox.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y / 3.f});
+    _ruleTextBox.setPosition({_sprite.getPosition().x, _sprite.getPosition().y + _sprite.getGlobalBounds().size.y / 3.f * 2.f});
+
     setOnClick([this](Clickable&){
         click(MouseClickState::PRESSED);
     });
@@ -80,6 +86,13 @@ void Card::updateScale(const float &scale)
 {    
     _sprite.setScale({scale, scale});
     _border.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y});
+}
+
+void Card::setPosition(const sf::Vector2f &position)
+{
+    _sprite.setPosition(position);
+    _border.setPosition(position);
+    _ruleTextBox.setPosition({position.x, position.y + _sprite.getGlobalBounds().size.y / 3.f * 2.f});
 }
 
 void Card::setOnClick(ClickCallback callback)
@@ -165,4 +178,12 @@ void Card::showBack()
 {
     _sprite.setTexture(*_backTexture);
     _currentFace = Face::BACK;
+}
+
+void Card::draw(sf::RenderTarget &target) const
+{
+    SpriteClickable::draw(target);
+    if (_ruleTextBox.isVisible()) {
+        _ruleTextBox.draw(target);
+    }
 }
