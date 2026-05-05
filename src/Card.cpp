@@ -5,6 +5,7 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager, sf::
         _backTexture(&textureManager.getTexture("card_back")),
         _ruleFont(&ruleFont),
         _ruleTextBox(*_ruleFont, "<rule placeholder>", 20),
+        _ruleButton("i", *_ruleFont),
         _type(type)
 {
     switch (type) {
@@ -61,6 +62,12 @@ Card::Card(const Card::VegetableType &type, TextureManager &textureManager, sf::
     _ruleTextBox.setSize({_sprite.getGlobalBounds().size.x, _sprite.getGlobalBounds().size.y / 3.f});
     _ruleTextBox.setPosition({_sprite.getPosition().x, _sprite.getPosition().y + _sprite.getGlobalBounds().size.y / 3.f * 2.f});
 
+    _ruleButton.setPosition({_sprite.getPosition().x + 5.f, _sprite.getPosition().y + 5.f});
+    _ruleButton.setSize({20.f, 20.f});
+    _ruleButton.setCharacterSize(16);
+    _ruleButton.setFillColor(sf::Color(0, 128, 0, 200));
+    _ruleButton.setTextColor(sf::Color::White);
+
     setOnClick([this](Clickable&){
         click(MouseClickState::PRESSED);
     });
@@ -94,6 +101,7 @@ void Card::setPosition(const sf::Vector2f &position)
     _sprite.setPosition(position);
     _border.setPosition(position);
     _ruleTextBox.setPosition({position.x, position.y + _sprite.getGlobalBounds().size.y / 3.f * 2.f});
+    _ruleButton.setPosition({position.x + 30.f, position.y + 40.f});
 }
 
 void Card::setOnClick(ClickCallback callback)
@@ -184,6 +192,7 @@ void Card::showBack()
 void Card::draw(sf::RenderTarget &target) const
 {
     SpriteClickable::draw(target);
+    _ruleButton.draw(target);
     if (_ruleTextBox.isVisible()) {
         _ruleTextBox.draw(target);
     }

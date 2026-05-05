@@ -8,6 +8,7 @@
 #include <functional>
 #include "SpriteClickable.hpp"
 #include "ui/TextBox.hpp"
+#include "ui/TextButton.hpp"
 #include "TextureManager.hpp"
 
 class Card : public SpriteClickable
@@ -48,7 +49,7 @@ private:
 
     // UI Attributes
     TextBox         _ruleTextBox;
-
+    TextButton      _ruleButton;
 public:
     Card(const Card::VegetableType& type, TextureManager& textureManager, sf::Font& ruleFont);
     ~Card();

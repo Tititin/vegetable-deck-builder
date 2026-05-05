@@ -3,8 +3,6 @@
 #include "../lib/Params.hpp"
 #include "../lib/Enums.hpp"
 #include "../Clickable.hpp"
-#include "../InputManager.hpp"
-#include "../TextureManager.hpp"
 
 class BasicButton : public Clickable {
     protected:
